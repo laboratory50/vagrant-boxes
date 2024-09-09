@@ -1,0 +1,8 @@
+.vagrant
+*.iso
+*.box
+*.log
+*.qcow2
+output-*
+mpoint
+

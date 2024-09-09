@@ -1,0 +1,45 @@
+part biosboot --fstype=biosboot --size=1
+part / --fstype=ext4 --size=5000 --grow
+
+# Partition clearing information
+clearpart --none --initlabel
+# Use text mode.
+text
+# Use CDROM installation media
+cdrom
+# Keyboard layouts
+keyboard --xlayouts='us'
+lang en_US.UTF-8
+
+# Network information
+network --bootproto=dhcp --device=enp4s0 --ipv6=auto --activate
+network --hostname=openeuler.com
+# Root password
+rootpw --iscrypted $6$mlLQJTpHiRox1BkD$FwW8blSkyQ1TfiHLUT.565Ve01U961G49WxRwr4B7GoWd92BE9aTXTyQKLhY8iSxzfswv4vhQlFK6JqcdWjYc1
+# Run the Setup Agent on first boot
+firstboot --enable
+# Do not configure the X Window System
+skipx
+# System services
+services --disabled="chronyd"
+timezone Europe/Moscow
+user --name=vagrant --plaintext --password password
+# Reboot after the installation has successfully completed.
+reboot --eject
+
+%packages
+openssh-server
+%end
+
+%post
+echo -e 'Defaults:vagrant !requiretty\n%vagrant ALL=(ALL) NOPASSWD: ALL\n' > /etc/sudoers.d/vagrant
+chmod 440 /etc/sudoers.d/vagrant
+echo 'SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{type}=="1", NAME="ens3"' > /etc/udev/rules.d/70-persistent-net.rules
+sed -i 's|repo.openeuler.org|mirror.truenetwork.ru/openeuler|g' /etc/yum.repos.d/openEuler.repo
+dnf remove -y cockpit
+dnf remove -y wayland xorg-x11-utils libX11 fontconfig cairo gdk-pixbuf2 pango libxkbcommon xkeyboard-config
+dnf remove -y gcc boost-chrono boost-atomic boost-timer boost-filesystem boost-system
+dnf remove -y perl perl-devel perl-Filter-Simple perl-Digest perl-Encode perl-Env perl-URI perl-threads
+dnf remove -y samba-common samba-client-libs sssd sssd-common sssd-ad sssd-client sssd-krb5 sssd-ldap
+dnf remove -y rsyslog yum security-tool
+%end

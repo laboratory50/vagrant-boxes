@@ -1,0 +1,35 @@
+lang ru_RU.UTF-8
+keyboard --xlayouts='us'
+network --bootproto=dhcp --noipv6 --onboot=on --device=eth0
+xconfig --defaultdesktop=KDE --startxonboot
+firewall --disabled
+selinux --permissive
+timezone Europe/Moscow
+bootloader --timeout=1 --location=mbr --append='net.ifnames=0 biosdevname=0'
+text
+zerombr
+clearpart --all --initlabel
+autopart
+# part / --fstype=ext4 --size=5000 --grow --asprimary
+firstboot --disabled
+rootpw --plaintext password
+user --name=vagrant --plaintext --password password
+reboot --eject
+
+%packages --excludedocs
+%{ for group in groups ~}
+@${group}
+%{ endfor ~}
+curl
+# Если не установить эту ерунду, то установка падает начиная с 7.3.2.
+grub2-redos-theme
+mc
+rsync
+vim
+%end
+
+%post
+# Настраиваем sudo.
+echo -e 'Defaults:vagrant !requiretty\n%vagrant ALL=(ALL) NOPASSWD: ALL\n' > /etc/sudoers.d/vagrant
+chmod 440 /etc/sudoers.d/vagrant
+%end

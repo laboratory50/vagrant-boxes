@@ -1,0 +1,26 @@
+#cloud-config
+autoinstall:
+  version: 1
+  timezone: 'Europe/Moscow'
+  storage:
+      layout:
+          name: direct
+  packages:
+    - vim
+%{ for package in packages ~}
+    - ${package}
+%{ endfor ~}
+  identity:
+    hostname: ubuntu
+    username: vagrant
+    password: '$6$mlLQJTpHiRox1BkD$FwW8blSkyQ1TfiHLUT.565Ve01U961G49WxRwr4B7GoWd92BE9aTXTyQKLhY8iSxzfswv4vhQlFK6JqcdWjYc1'
+  early-commands:
+    # otherwise packer tries to connect and exceed max attempts.
+    - systemctl stop ssh.service
+    - systemctl stop ssh.socket
+  ssh:
+    install-server: yes
+    allow-pw: yes
+  late-commands:
+    - echo 'vagrant ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/vagrant
+    - echo 'SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{type}=="1", NAME="ens7"' > /target/etc/udev/rules.d/70-persistent-net.rules

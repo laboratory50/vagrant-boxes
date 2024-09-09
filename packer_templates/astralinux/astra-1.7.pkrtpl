@@ -1,0 +1,46 @@
+choose-mirror-bin mirror/http/proxy string
+d-i base-installer/kernel/override-image string linux-server
+d-i clock-setup/utc boolean true
+d-i clock-setup/utc-auto boolean true
+d-i finish-install/reboot_in_progress note
+d-i grub-installer/only_debian boolean true
+d-i grub-installer/with_other_os boolean true
+d-i grub-installer/password password password
+d-i grub-installer/password-again password password
+d-i keymap select us
+d-i partman-auto/method string regular
+d-i partman-auto/expert_recipe string root :: \
+    10000 1 10000000000 ext4 \
+        $primary{ } $bootable{ } method{ format } format{ } \
+        use_filesystem{ } filesystem{ ext4 } mountpoint{ / } \
+    .
+d-i partman-auto/choose_recipe select root
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true
+d-i partman/confirm_write_new_label boolean true
+d-i partman-basicfilesystems/no_swap boolean false
+d-i passwd/root-login boolean false
+d-i passwd/user-fullname string vagrant
+d-i passwd/user-uid string 1000
+d-i passwd/user-password password password
+d-i passwd/user-password-again password password
+d-i passwd/username string vagrant
+d-i pkgsel/include string sudo curl wget rsync aptitude mc vim gpg ca-certificates
+d-i pkgsel/install-language-support boolean false
+d-i pkgsel/update-policy select none
+d-i pkgsel/upgrade select full-upgrade
+d-i time/zone string Europe/Moscow
+d-i user-setup/allow-password-weak boolean true
+d-i user-setup/encrypt-home boolean false
+d-i preseed/late_command string echo -e '\nauto eth0\niface eth0 inet dhcp' >> /target/etc/network/interfaces
+apt-cdrom-setup apt-setup/cdrom/set-first boolean false
+popularity-contest popularity-contest/participate boolean false
+netcfg netcfg/enable boolean true
+netcfg netcfg/get_hostname string smolensk
+netcfg netcfg/get_domain string
+netcfg netcfg/choose_interface select auto
+tasksel tasksel/first multiselect ${tasks}
+d-i astra-additional-setup/os-check string ${level}
+d-i astra-additional-setup/additional-settings-orel multiselect
+d-i astra-additional-setup/additional-settings-smolensk multiselect Enable Mandatory Integrity Control, Enable Mandatory Access Control, Disable ptrace capability

@@ -1,0 +1,7 @@
+Vagrant.configure("2") do |config|
+    config.vm.guest = "debian"
+    config.vm.provider :libvirt do |libvirt|
+        libvirt.video_type = "qxl"
+        libvirt.video_vram = 65536
+    end
+end

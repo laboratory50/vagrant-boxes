@@ -1,0 +1,12 @@
+Vagrant.configure("2") do |config|
+    config.vm.guest = "debian"
+    config.vm.provider :libvirt do |libvirt|
+        libvirt.video_type = "qxl"
+        libvirt.video_vram = 65536
+    end
+    config.trigger.after :up do |trigger|
+        trigger.name = "fix-lightdm"
+        trigger.info = "lightdm падает при логине, если был изменён hostname"
+        trigger.run_remote = {inline: "systemctl restart display-manager"}
+    end
+end
