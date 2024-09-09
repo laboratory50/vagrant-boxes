@@ -4,7 +4,7 @@
 	smolensk-1.8.libvirt \
 	smolensk-fly-1.8.libvirt \
 	basealt \
-	aronia-starterkit aronia-server aronia-workstation aronia-simply \
+	aronia.libvirt aronia.vbox \
 	salvia.libvirt salvia.vbox \
 	salvia-kde.libvirt \
 	debian \
@@ -78,23 +78,15 @@ smolensk-fly-1.8.libvirt:
 	rm -f packer_templates/astralinux/qemu/smolensk-fly-1.8.box
 	cd packer_templates/astralinux; packer build -only qemu.smolensk-fly astra-1.8.pkr.hcl
 
-basealt: aronia-starterkit aronia-server aronia-workstation aronia-simply salvia.libvirt salvia.vbox salvia-kde.libvirt
+basealt: aronia.libvirt aronia.vbox salvia.libvirt salvia.vbox salvia-kde.libvirt
 
-aronia-starterkit:
-	rm -f packer_templates/basealt/aronia-starterkit.box
-	cd packer_templates/basealt; packer build -only qemu.starterkit aronia.pkr.hcl
+aronia.libvirt:
+	rm -f packer_templates/basealt/qemu/aronia.box
+	cd packer_templates/basealt; packer build -only qemu.aronia aronia.pkr.hcl
 
-aronia-server:
-	rm -f packer_templates/basealt/aronia-server.box
-	cd packer_templates/basealt; packer build -only qemu.server aronia.pkr.hcl
-
-aronia-workstation:
-	rm -f packer_templates/basealt/aronia-workstation.box
-	cd packer_templates/basealt; packer build -only qemu.workstation aronia.pkr.hcl
-
-aronia-simply:
-	rm -f packer_templates/basealt/aronia-simply.box
-	cd packer_templates/basealt; packer build -only qemu.simply aronia.pkr.hcl
+aronia.vbox:
+	rm -f packer_templates/basealt/virtualbox-iso/aronia.box
+	cd packer_templates/basealt; packer build -only virtualbox-iso.aronia aronia.pkr.hcl
 
 salvia.libvirt:
 	rm -f packer_templates/basealt/qemu/salvia.box

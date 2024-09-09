@@ -4,6 +4,8 @@
 # https://www.altlinux.org/Simply_Linux_10
 
 variables {
+    iso_url = "http://ftp.altlinux.org/pub/distributions/ALTLinux/p10/images/server/x86_64/alt-server-10.2-x86_64.iso"
+    iso_checksum = "md5:28827cc95d0dc18c1fb7ecccf0ddcac8"
     starterkit_iso_url = "https://mirror.yandex.ru/altlinux-starterkits/x86_64/permalink/alt-p10-server-systemd-latest-x86_64.iso"
     starterkit_iso_checksum = "md5:eee0658504973c781e5c5538d8e9ffd8"
     server_iso_url = "http://ftp.altlinux.org/pub/distributions/ALTLinux/p10/images/server/x86_64/alt-server-10.1-x86_64.iso"
@@ -29,14 +31,18 @@ variables {
     ]
 }
 
-source "qemu" "starterkit" {
-    iso_url = var.starterkit_iso_url
-    iso_checksum = var.starterkit_iso_checksum
+source "qemu" "aronia" {
+    iso_url = var.iso_url
+    iso_checksum = var.iso_checksum
     disk_size = "30000M"
     memory = 5120
     format = "qcow2"
     accelerator = "kvm"
-    http_directory = "starterkit-http"
+    http_content = {
+        "/autoinstall.scm" = templatefile("${path.root}/aronia-http/autoinstall.pkrtpl", {boot="/dev/vda"}),
+        "/pkg-groups.tar" = file("${path.root}/aronia-http/pkg-groups.tar"),
+        "/vm-profile.scm" = file("${path.root}/aronia-http/vm-profile.scm")
+    }
     ssh_username = "vagrant"
     ssh_password = "password"
     ssh_timeout = "1m"
@@ -45,7 +51,7 @@ source "qemu" "starterkit" {
     disk_interface = "virtio"
     boot_wait = "3s"
     boot_command = [
-        "<tab><wait> ai curl=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<enter>",
+        "e<wait><down><down><down><end> ai curl=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<f10>",
         "<wait10m>",
         # Авто-установка завершена. Сейчас будем разбираться с sudo и ssh. А можно ли по-человечески?
         "<leftCtrlOn><leftAltOn><f3><leftAltOff><leftCtrlOff><wait2s>",
@@ -61,70 +67,150 @@ source "qemu" "starterkit" {
     shutdown_command = "sudo -S shutdown -P now"
 }
 
-source "qemu" "server" {
-    iso_url = var.server_iso_url
-    iso_checksum = var.server_iso_checksum
-    disk_size = "30000M"
+source "virtualbox-iso" "aronia" {
+    iso_url = var.iso_url
+    iso_checksum = var.iso_checksum
+    disk_size = 30000
     memory = 5120
-    format = "qcow2"
-    accelerator = "kvm"
-    http_directory = "server-http"
+    gfx_controller = "vmsvga"
+    gfx_vram_size = 33
+    guest_os_type = "Debian_64"
+    guest_additions_path = "VBoxGuestAdditions_{{ .Version }}.iso"
+    guest_additions_mode = "upload"
+    guest_additions_interface = "sata"
+    hard_drive_interface = "sata"
+    iso_interface = "sata"
+    vboxmanage = [[
+      "modifyvm",
+      "{{.Name}}",
+      "--audio",
+      "none",
+      "--nat-localhostreachable1",
+      "on",
+    ]]
+    virtualbox_version_file = ".vbox_version"
+    http_content = {
+        "/autoinstall.scm" = templatefile("${path.root}/aronia-http/autoinstall.pkrtpl", {boot="/dev/sda"}),
+        "/pkg-groups.tar" = file("${path.root}/aronia-http/pkg-groups.tar"),
+        "/vm-profile.scm" = file("${path.root}/aronia-http/vm-profile.scm")
+    }
     ssh_username = "vagrant"
     ssh_password = "password"
     ssh_timeout = "1m"
     vm_name = "${source.name}"
-    net_device = "virtio-net"
-    disk_interface = "virtio"
-    boot_wait = "3s"
-    boot_command = var.boot_command
+    boot_wait = "5s"
+    boot_command = [
+        "e<wait><down><down><down><end> ai curl=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<f10>",
+        "<wait20m>",
+        # Авто-установка завершена. Сейчас будем разбираться с sudo и ssh. А можно ли по-человечески?
+        "vagrant<enter><wait2s>password<enter><wait2s>",
+        "su root<enter><wait>password<enter><wait>",
+        "apt-get update<enter><wait30s>",
+        "apt-get install -y vim-console mc curl sudo openssh<enter><wait1m>",
+        "sed -i '/PasswordAuthentication yes/s/# //g' /etc/openssh/sshd_config<enter><wait>",
+        "echo -e 'Defaults:vagrant !requiretty\\n%vagrant ALL=(ALL) NOPASSWD: ALL\n' > /etc/sudoers.d/vagrant<enter><wait>",
+        "chmod 440 /etc/sudoers.d/vagrant<enter><wait>",
+        "systemctl enable sshd && systemctl start sshd<enter>"
+    ]
     shutdown_command = "sudo -S shutdown -P now"
 }
 
-source "qemu" "workstation" {
-    iso_url = var.workstation_iso_url
-    iso_checksum = var.workstation_iso_checksum
-    disk_size = "30000M"
-    memory = 5120
-    format = "qcow2"
-    accelerator = "kvm"
-    http_directory = "workstation-http"
-    ssh_username = "vagrant"
-    ssh_password = "password"
-    ssh_timeout = "1m"
-    vm_name = "${source.name}"
-    net_device = "virtio-net"
-    disk_interface = "virtio"
-    boot_wait = "3s"
-    boot_command = var.boot_command
-    shutdown_command = "sudo -S shutdown -P now"
-}
+# source "qemu" "starterkit" {
+#     iso_url = var.starterkit_iso_url
+#     iso_checksum = var.starterkit_iso_checksum
+#     disk_size = "30000M"
+#     memory = 5120
+#     format = "qcow2"
+#     accelerator = "kvm"
+#     http_directory = "starterkit-http"
+#     ssh_username = "vagrant"
+#     ssh_password = "password"
+#     ssh_timeout = "1m"
+#     vm_name = "${source.name}"
+#     net_device = "virtio-net"
+#     disk_interface = "virtio"
+#     boot_wait = "3s"
+#     boot_command = [
+#         "<tab><wait> ai curl=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<enter>",
+#         "<wait10m>",
+#         # Авто-установка завершена. Сейчас будем разбираться с sudo и ssh. А можно ли по-человечески?
+#         "<leftCtrlOn><leftAltOn><f3><leftAltOff><leftCtrlOff><wait2s>",
+#         "vagrant<enter><wait2s>password<enter><wait2s>",
+#         "su root<enter><wait>password<enter><wait>",
+#         "apt-get update<enter><wait30s>",
+#         "apt-get install -y vim-console mc curl sudo openssh<enter><wait1m>",
+#         "sed -i '/PasswordAuthentication yes/s/# //g' /etc/openssh/sshd_config<enter><wait>",
+#         "echo -e 'Defaults:vagrant !requiretty\\n%vagrant ALL=(ALL) NOPASSWD: ALL\n' > /etc/sudoers.d/vagrant<enter><wait>",
+#         "chmod 440 /etc/sudoers.d/vagrant<enter><wait>",
+#         "systemctl enable sshd && systemctl start sshd<enter>"
+#     ]
+#     shutdown_command = "sudo -S shutdown -P now"
+# }
 
-source "qemu" "simply" {
-    iso_url = var.simply_iso_url
-    iso_checksum = var.simply_iso_checksum
-    disk_size = "30000M"
-    memory = 5120
-    format = "qcow2"
-    accelerator = "kvm"
-    http_directory = "simply-http"
-    ssh_username = "vagrant"
-    ssh_password = "password"
-    ssh_timeout = "1m"
-    vm_name = "${source.name}"
-    net_device = "virtio-net"
-    disk_interface = "virtio"
-    boot_wait = "3s"
-    boot_command = var.boot_command
-    shutdown_command = "sudo -S shutdown -P now"
-}
+# source "qemu" "server" {
+#    iso_url = var.server_iso_url
+#    iso_checksum = var.server_iso_checksum
+#    disk_size = "30000M"
+#    memory = 5120
+#    format = "qcow2"
+#    accelerator = "kvm"
+#    http_directory = "server-http"
+#    ssh_username = "vagrant"
+#    ssh_password = "password"
+#    ssh_timeout = "1m"
+#    vm_name = "${source.name}"
+#    net_device = "virtio-net"
+#    disk_interface = "virtio"
+#    boot_wait = "3s"
+#    boot_command = var.boot_command
+#    shutdown_command = "sudo -S shutdown -P now"
+# }
+
+# source "qemu" "workstation" {
+#     iso_url = var.workstation_iso_url
+#     iso_checksum = var.workstation_iso_checksum
+#     disk_size = "30000M"
+#     memory = 5120
+#     format = "qcow2"
+#     accelerator = "kvm"
+#     http_directory = "workstation-http"
+#     ssh_username = "vagrant"
+#     ssh_password = "password"
+#     ssh_timeout = "1m"
+#     vm_name = "${source.name}"
+#     net_device = "virtio-net"
+#     disk_interface = "virtio"
+#     boot_wait = "3s"
+#     boot_command = var.boot_command
+#     shutdown_command = "sudo -S shutdown -P now"
+# }
+
+# source "qemu" "simply" {
+#     iso_url = var.simply_iso_url
+#     iso_checksum = var.simply_iso_checksum
+#     disk_size = "30000M"
+#     memory = 5120
+#     format = "qcow2"
+#     accelerator = "kvm"
+#     http_directory = "simply-http"
+#     ssh_username = "vagrant"
+#     ssh_password = "password"
+#     ssh_timeout = "1m"
+#     vm_name = "${source.name}"
+#     net_device = "virtio-net"
+#     disk_interface = "virtio"
+#     boot_wait = "3s"
+#     boot_command = var.boot_command
+#     shutdown_command = "sudo -S shutdown -P now"
+# }
 
 build {
-    sources = ["source.qemu.workstation", "source.qemu.simply"]
+    sources = ["source.qemu.aronia", "source.virtualbox-iso.aronia"]
     provisioner "shell" {
         expect_disconnect = true
         scripts = [
-            "${path.root}/scripts/update.sh",
-            "${path.root}/scripts/cleanup.sh",
+            # "${path.root}/scripts/update.sh",
+            # "${path.root}/scripts/cleanup.sh",
             "${path.root}/../common/x.sh",
             "${path.root}/../common/vagrant.sh",
             "${path.root}/../common/love.sh",
@@ -134,27 +220,27 @@ build {
         ]
     }
     post-processor "vagrant" {
-        output = "aronia-${source.name}.box"
+        output = "${source.type}/${source.name}.box"
         vagrantfile_template = "files/Vagrantfile-desktop"
     }
 }
 
-build {
-    sources = ["source.qemu.starterkit", "source.qemu.server"]
-    provisioner "shell" {
-        expect_disconnect = true
-        scripts = [
-            "${path.root}/scripts/update.sh",
-            "${path.root}/scripts/cleanup.sh",
-            "${path.root}/../common/vagrant.sh",
-            "${path.root}/../common/love.sh",
-            "${path.root}/../common/machine-id-and-random-seed.sh",
-            "${path.root}/../common/logs-and-cache.sh",
-            "${path.root}/../common/minimize.sh"
-        ]
-    }
-    post-processor "vagrant" {
-        output = "aronia-${source.name}.box"
-        vagrantfile_template = "files/Vagrantfile-server"
-    }
-}
+# build {
+#     sources = ["source.qemu.starterkit", "source.qemu.server"]
+#     provisioner "shell" {
+#         expect_disconnect = true
+#         scripts = [
+#             # "${path.root}/scripts/update.sh",
+#             # "${path.root}/scripts/cleanup.sh",
+#             "${path.root}/../common/vagrant.sh",
+#             "${path.root}/../common/love.sh",
+#             "${path.root}/../common/machine-id-and-random-seed.sh",
+#             "${path.root}/../common/logs-and-cache.sh",
+#             "${path.root}/../common/minimize.sh"
+#         ]
+#     }
+#     post-processor "vagrant" {
+#         output = "${source.type}/aronia-${source.name}.box"
+#         vagrantfile_template = "files/Vagrantfile-server"
+#     }
+# }
