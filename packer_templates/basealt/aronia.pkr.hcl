@@ -166,24 +166,24 @@ source "virtualbox-iso" "aronia" {
 #    shutdown_command = "sudo -S shutdown -P now"
 # }
 
-# source "qemu" "workstation" {
-#     iso_url = var.workstation_iso_url
-#     iso_checksum = var.workstation_iso_checksum
-#     disk_size = "30000M"
-#     memory = 5120
-#     format = "qcow2"
-#     accelerator = "kvm"
-#     http_directory = "workstation-http"
-#     ssh_username = "vagrant"
-#     ssh_password = "password"
-#     ssh_timeout = "1m"
-#     vm_name = "${source.name}"
-#     net_device = "virtio-net"
-#     disk_interface = "virtio"
-#     boot_wait = "3s"
-#     boot_command = var.boot_command
-#     shutdown_command = "sudo -S shutdown -P now"
-# }
+source "qemu" "aronia-kde" {
+    iso_url = var.workstation_iso_url
+    iso_checksum = var.workstation_iso_checksum
+    disk_size = "30000M"
+    memory = 5120
+    format = "qcow2"
+    accelerator = "kvm"
+    http_directory = "workstation-http"
+    ssh_username = "vagrant"
+    ssh_password = "password"
+    ssh_timeout = "1m"
+    vm_name = "${source.name}"
+    net_device = "virtio-net"
+    disk_interface = "virtio"
+    boot_wait = "3s"
+    boot_command = var.boot_command
+    shutdown_command = "sudo -S shutdown -P now"
+}
 
 # source "qemu" "simply" {
 #     iso_url = var.simply_iso_url
@@ -205,7 +205,7 @@ source "virtualbox-iso" "aronia" {
 # }
 
 build {
-    sources = ["source.qemu.aronia", "source.virtualbox-iso.aronia"]
+    sources = ["source.qemu.aronia", "source.virtualbox-iso.aronia", "source.qemu.aronia-kde"]
     provisioner "shell" {
         expect_disconnect = true
         scripts = [
