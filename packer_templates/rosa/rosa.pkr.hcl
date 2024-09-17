@@ -88,65 +88,57 @@ source "qemu" "fresh-kde" {
     ]
 }
 
-source "qemu" "chrome-kde" {
-    iso_url = var.chrome_iso_url
-    iso_checksum = var.chrome_iso_checksum
-    shutdown_command = "sudo shutdown -P now"
-    disk_size = "30000M"
-    memory = 5120
-    format = "qcow2"
-    accelerator = "kvm"
-    http_directory = "http"
-    ssh_username = "vagrant"
-    ssh_password = "password"
-    ssh_timeout = "2m"
-    vm_name = "${source.name}"
-    net_device = "virtio-net"
-    disk_interface = "virtio"
-    boot_wait = "5s"
-    boot_command = [
-        "<esc><wait>e",
-        "<down><down><end> systemd.unit=anaconda.target inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/rosa-fresh.cfg<F10>",
-        "<wait15m>",
-        # Разработчики не осилили перезагрузку после завершения авто-установки. Сейчас мы им поможем.
-        # См. https://forum.rosalinux.ru/viewtopic.php?f=58&t=10405
-        "<leftCtrlOn><leftAltOn><f2><leftAltOff><leftCtrlOff><wait20s>",
-        "root<enter><wait>shutdown -r now<enter>"
-    ]
-}
+# source "qemu" "chrome-kde" {
+#     iso_url = var.chrome_iso_url
+#     iso_checksum = var.chrome_iso_checksum
+#     shutdown_command = "sudo shutdown -P now"
+#     disk_size = "30000M"
+#     memory = 5120
+#     format = "qcow2"
+#     accelerator = "kvm"
+#     http_directory = "http"
+#     ssh_username = "vagrant"
+#     ssh_password = "password"
+#     ssh_timeout = "2m"
+#     vm_name = "${source.name}"
+#     net_device = "virtio-net"
+#     disk_interface = "virtio"
+#     boot_wait = "5s"
+#     boot_command = [
+#         "<esc><wait>e",
+#         "<down><down><end> systemd.unit=anaconda.target inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/rosa-fresh.cfg<F10>"
+#     ]
+# }
 
-source "qemu" "cobalt" {
-    iso_url = var.cobalt_iso_url
-    iso_checksum = var.cobalt_iso_checksum
-    shutdown_command = "echo 'password' | sudo -S shutdown -P now"
-    disk_size = "30000M"
-    memory = 5120
-    format = "qcow2"
-    accelerator = "kvm"
-    http_directory = "http"
-    ssh_username = "vagrant"
-    ssh_password = "password"
-    ssh_timeout = "20m"
-    vm_name = "${source.name}"
-    net_device = "virtio-net"
-    disk_interface = "virtio"
-    boot_wait = "10s"
-    boot_command = [
-        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/rosa-cobalt-server.cfg<enter>"
-    ]
-}
+# source "qemu" "cobalt" {
+#     iso_url = var.cobalt_iso_url
+#     iso_checksum = var.cobalt_iso_checksum
+#     shutdown_command = "echo 'password' | sudo -S shutdown -P now"
+#     disk_size = "30000M"
+#     memory = 5120
+#     format = "qcow2"
+#     accelerator = "kvm"
+#     http_directory = "http"
+#     ssh_username = "vagrant"
+#     ssh_password = "password"
+#     ssh_timeout = "20m"
+#     vm_name = "${source.name}"
+#     net_device = "virtio-net"
+#     disk_interface = "virtio"
+#     boot_wait = "10s"
+#     boot_command = [
+#         "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/rosa-cobalt-server.cfg<enter>"
+#     ]
+# }
 
 build {
     sources = [
-        "source.qemu.fresh-server",
-        "source.virtualbox-iso.fresh-server",
-        "source.qemu.fresh-kde",
-        "source.qemu.chrome-kde",
-        "source.qemu.cobalt"
+        "source.qemu.fresh",
+        "source.virtualbox-iso.fresh",
+        "source.qemu.fresh-kde"
     ]
     provisioner "shell" {
         scripts = [
-            # "${path.root}/scripts/sshfs.sh",
             "${path.root}/scripts/cleanup.sh",
             "${path.root}/../common/x.sh",
             "${path.root}/../common/vagrant.sh",

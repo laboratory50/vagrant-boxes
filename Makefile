@@ -22,7 +22,7 @@
 	redos8.libvirt redos8.vbox \
 	redos8-kde.libvirt \
 	rosa \
-	fresh-server.libvirt fresh-server.vbox \
+	fresh.libvirt fresh.vbox \
 	fresh-kde.libvirt \
 	chrome-kde cobalt \
 	ubuntu \
@@ -199,27 +199,19 @@ redos8-kde.libvirt:
 	rm -f packer_templates/redsoft/qemu/redos8-kde.box
 	cd packer_templates/redsoft; packer build -only qemu.redos8-kde redos8.pkr.hcl
 
-rosa: fresh-server.libvirt fresh-server.vbox fresh-kde.libvirt chrome-kde cobalt
+rosa: fresh.libvirt fresh.vbox fresh-kde.libvirt
 
-fresh-server.libvirt:
+fresh.libvirt:
 	rm -f packer_templates/rosa/qemu/fresh-server.box
 	cd packer_templates/rosa; packer build -only qemu.fresh-server rosa.pkr.hcl
 
-fresh-server.vbox:
+fresh.vbox:
 	rm -f packer_templates/rosa/virtualbox-iso/fresh-server.box
 	cd packer_templates/rosa; packer build -only virtualbox-iso.fresh-server rosa.pkr.hcl
 
 fresh-kde.libvirt:
 	rm -f packer_templates/rosa/qemu/fresh-kde.box
 	cd packer_templates/rosa; packer build -only qemu.fresh-kde rosa.pkr.hcl
-
-chrome-kde:
-	rm -f packer_templates/rosa/qemu/chrome-kde.box
-	cd packer_templates/rosa; packer build -only qemu.chrome-kde rosa.pkr.hcl
-
-cobalt:
-	rm -f packer_templates/rosa/qemu/cobalt.box
-	cd packer_templates/rosa; packer build -only qemu.cobalt rosa.pkr.hcl
 
 ubuntu: jammy.libvirt jammy.vbox noble.libvirt noble.vbox noble-kde.libvirt
 
