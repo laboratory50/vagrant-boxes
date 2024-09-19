@@ -1,1 +1,0 @@
-../simply-http/autoinstall.scm

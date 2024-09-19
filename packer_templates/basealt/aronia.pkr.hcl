@@ -16,6 +16,7 @@ variables {
         "sed -i '/PasswordAuthentication yes/s/# //g' /etc/openssh/sshd_config<enter><wait>",
         "echo -e 'Defaults:vagrant !requiretty\\n%vagrant ALL=(ALL) NOPASSWD: ALL\n' > /etc/sudoers.d/vagrant<enter><wait>",
         "chmod 440 /etc/sudoers.d/vagrant<enter><wait>",
+        "cp -r /etc/net/ifaces/ens3 /etc/net/ifaces/ens7<enter><wait>",
         "systemctl enable sshd && systemctl start sshd<enter>"
     ]
 }
@@ -120,7 +121,7 @@ build {
     }
     post-processor "vagrant" {
         output = "${source.type}/${source.name}.box"
-        vagrantfile_template = "files/Vagrantfile-desktop"
+        vagrantfile_template = "files/Vagrantfile-server"
     }
 }
 

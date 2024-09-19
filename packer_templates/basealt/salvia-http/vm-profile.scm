@@ -1,1 +1,1 @@
-../simply-http/vm-profile.scm
+../aronia-http/vm-profile.scm
