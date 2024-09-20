@@ -15,6 +15,7 @@ variables {
         "echo -e 'Defaults:vagrant !requiretty\\n%vagrant ALL=(ALL) NOPASSWD: ALL\n' > /etc/sudoers.d/vagrant<enter><wait>",
         "chmod 440 /etc/sudoers.d/vagrant<enter><wait>",
         "gpasswd -a vagrant wheel<enter><wait>",
+        "cp -r /etc/net/ifaces/ens3 /etc/net/ifaces/ens7<enter><wait>",
         "apt-get install -y openssh-server<enter><wait30s>",
         "sed -i '/PasswordAuthentication yes/s/# //g' /etc/openssh/sshd_config<enter><wait>",
         "systemctl enable sshd && systemctl start sshd<enter>"
@@ -109,8 +110,8 @@ build {
         expect_disconnect = true
         scripts = [
             "${path.root}/scripts/install-kde.sh",
-            # "${path.root}/scripts/update.sh",
-            # "${path.root}/scripts/cleanup.sh",
+            "${path.root}/scripts/update.sh",
+            "${path.root}/scripts/cleanup.sh",
             "${path.root}/../common/x.sh",
             "${path.root}/../common/vagrant.sh",
             "${path.root}/../common/love.sh",
@@ -121,6 +122,7 @@ build {
     }
     post-processor "vagrant" {
         output = "${source.type}/${source.name}.box"
-        vagrantfile_template = "files/Vagrantfile-desktop"
+        vagrantfile_template = "files/Vagrantfile-${source.name}"
     }
 }
+

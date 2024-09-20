@@ -121,7 +121,7 @@ build {
     }
     post-processor "vagrant" {
         output = "${source.type}/${source.name}.box"
-        vagrantfile_template = "files/Vagrantfile-server"
+        vagrantfile_template = "files/Vagrantfile-${source.name}"
     }
 }
 
