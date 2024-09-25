@@ -101,8 +101,8 @@ build {
     provisioner "shell" {
         scripts = [
             # "${path.root}//networking.sh",
-            # "${path.root}/scripts/ru-locale.sh",
-            # "${path.root}/../debian/lab50-key.sh",
+            "${path.root}/../debian/scripts/ru-locale.sh",
+            "${path.root}/../debian/scripts/lab50-key.sh",
             # "${path.root}/../common/vbox.sh",
             # "${path.root}/../common/qemu.sh",
             # "${path.root}/../debian/cleanup.sh",
@@ -110,8 +110,8 @@ build {
             "${path.root}/../common/vagrant.sh",
             "${path.root}/../common/love.sh",
             "${path.root}/../common/machine-id-and-random-seed.sh",
-            # "${path.root}/../common/logs-and-cache.sh",
-            # "${path.root}/../common/minimize.sh"
+            "${path.root}/../common/logs-and-cache.sh",
+            "${path.root}/../common/minimize.sh"
         ]
     }
     post-processor "vagrant" {

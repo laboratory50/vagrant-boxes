@@ -42,7 +42,8 @@ d-i user-setup/allow-password-weak boolean true
 d-i user-setup/encrypt-home boolean false
 d-i preseed/late_command string sed -i '/^deb cdrom:/d' /target/etc/apt/sources.list; \
   echo -e 'Defaults:vagrant !requiretty\n%vagrant ALL=(ALL) NOPASSWD: ALL\n' > /target/etc/sudoers.d/vagrant; \
-  chmod 440 /target/etc/sudoers.d/vagrant
+  chmod 440 /target/etc/sudoers.d/vagrant; \
+  echo 'SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{type}=="1", NAME="ens3"' > /target/etc/udev/rules.d/70-persistent-net.rules
 apt-cdrom-setup apt-setup/cdrom/set-first boolean false
 d-i apt-setup/no_mirror boolean true
 popularity-contest popularity-contest/participate boolean false
