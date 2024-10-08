@@ -1,8 +1,8 @@
 .PHONY: all clean \
 	astralinux \
-	smolensk-1.6 smolensk-1.7 smolensk-fly-1.7 orel-1.7 \
-	smolensk-1.8.libvirt \
-	smolensk-fly-1.8.libvirt \
+	smolensk-1.6.libvirt \
+	smolensk-1.7.libvirt smolensk-1.7-fly.libvirt \
+	smolensk-1.8.libvirt smolensk-1.8-fly.libvirt \
 	basealt \
 	aronia.libvirt aronia.vbox \
 	aronia-kde.libvirt \
@@ -50,34 +50,30 @@ clean:
 	rm -rf packer_templates/ubuntu/qemu
 	rm -rf packer_templates/ubuntu/virtualbox-iso
 
-astralinux: smolensk-1.6 smolensk-1.7 smolensk-fly-1.7 orel-1.7 smolensk-1.8.libvirt smolensk-fly-1.8.libvirt
+astralinux: smolensk-1.6 smolensk-1.7 smolensk-1.7-fly smolensk-1.8.libvirt smolensk-1.8-fly.libvirt
 
 smolensk-1.6:
 	rm -f packer_templates/astralinux/qemu/smolensk-1.6.box
 	cd packer_templates/astralinux; packer build -only qemu.smolensk astra-1.6.pkr.hcl
 
-smolensk-fly-1.6:
-	rm -f packer_templates/astralinux/qemu/smolensk-fly-1.6.box
+smolensk-1.6-fly:
+	rm -f packer_templates/astralinux/qemu/smolensk-1.6-fly.box
 	cd packer_templates/astralinux; packer build -only qemu.smolensk-fly astra-1.6.pkr.hcl
 
 smolensk-1.7:
 	rm -f packer_templates/astralinux/qemu/smolensk-1.7.box
 	cd packer_templates/astralinux; packer build -only qemu.smolensk astra-1.7.pkr.hcl
 
-smolensk-fly-1.7:
-	rm -f packer_templates/astralinux/qemu/smolensk-fly-1.7.box
+smolensk-1.7-fly:
+	rm -f packer_templates/astralinux/qemu/smolensk-1.7-fly.box
 	cd packer_templates/astralinux; packer build -only qemu.smolensk-fly astra-1.7.pkr.hcl
-
-orel-1.7:
-	rm -f packer_templates/astralinux/qemu/orel-1.7.box
-	cd packer_templates/astralinux; packer build -only qemu.orel astra-1.7.pkr.hcl
 
 smolensk-1.8.libvirt:
 	rm -f packer_templates/astralinux/qemu/smolensk-1.8.box
 	cd packer_templates/astralinux; packer build -only qemu.smolensk astra-1.8.pkr.hcl
 
-smolensk-fly-1.8.libvirt:
-	rm -f packer_templates/astralinux/qemu/smolensk-fly-1.8.box
+smolensk-1.8-fly.libvirt:
+	rm -f packer_templates/astralinux/qemu/smolensk-1.8-fly.box
 	cd packer_templates/astralinux; packer build -only qemu.smolensk-fly astra-1.8.pkr.hcl
 
 basealt: aronia.libvirt aronia.vbox aronia-kde.libvirt salvia.libvirt salvia.vbox salvia-kde.libvirt

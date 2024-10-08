@@ -61,29 +61,8 @@ source "qemu" "smolensk-fly" {
     shutdown_command = "sudo -S /sbin/shutdown -hP now"
 }
 
-source "qemu" "orel" {
-    iso_url = var.smolensk_1_7_iso_url
-    iso_checksum = var.smolensk_1_7_iso_checksum
-    http_content = {
-        "/preseed.cfg" = templatefile("${path.root}/astra-1.7.pkrtpl", {tasks = "Base, SSH server", level="Base security level Orel"})
-    }
-    disk_size = "30000M"
-    memory = 5120
-    format = "qcow2"
-    accelerator = "kvm"
-    ssh_username = "vagrant"
-    ssh_password = "password"
-    ssh_timeout = "30m"
-    vm_name = "${source.name}"
-    net_device = "virtio-net"
-    disk_interface = "virtio"
-    boot_wait = "1s"
-    boot_command = var.boot_command
-    shutdown_command = "sudo -S /sbin/shutdown -hP now"
-}
-
 build {
-    sources = ["source.qemu.smolensk", "source.qemu.smolensk-fly", "source.qemu.orel"]
+    sources = ["source.qemu.smolensk", "source.qemu.smolensk-fly"]
     provisioner "shell" {
         inline = [
             "echo '${var.smolensk_1_7_repos}' | sudo tee /etc/apt/sources.list",
@@ -107,7 +86,7 @@ build {
         ]
     }
     post-processor "vagrant" {
-        output = "${source.type}/${source.name}-1.7.box"
+        output = "${source.type}/${replace(source.name, "smolensk", "smolensk-1.7")}.box"
         vagrantfile_template = "files/Vagrantfile"
     }
 }

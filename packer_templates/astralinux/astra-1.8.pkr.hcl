@@ -84,7 +84,7 @@ build {
         ]
     }
     post-processor "vagrant" {
-        output = "${source.type}/${source.name}-1.8.box"
+        output = "${source.type}/${replace(source.name, "smolensk", "smolensk-1.8")}.box"
         vagrantfile_template = "files/Vagrantfile"
     }
 }
