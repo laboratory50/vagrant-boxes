@@ -6,6 +6,12 @@
 
 | Образ                                 | Цели Makefile                         |
 |---------------------------------------|---------------------------------------|
+| Astra Linux 1.6                       | `smolensk-1.6.libvirt`                |
+| Astra Linux 1.6 + Fly                 | `smolensk-1.6-fly.libvirt`            |
+| Astra Linux 1.7                       | `smolensk-1.7.libvirt`                |
+| Astra Linux 1.7 + Fly                 | `smolensk-1.7-fly.libvirt`            |
+| Astra Linux 1.8                       | `smolensk-1.8.libvirt`                |
+| Astra Linux 1.8 + Fly                 | `smolensk-1.8-fly.libvirt`            |
 | Альт 10                               | `aronia.libvirt`, `aronia.vbox`       |
 | Альт 10 + KDE                         | `aronia-kde.libvirt`                  |
 | Альт 11                               | `salvia.libvirt`, `salvia.vbox`       |

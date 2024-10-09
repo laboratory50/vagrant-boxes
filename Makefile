@@ -36,7 +36,8 @@ all: astralinux basealt debian fedora lab50 nppkt redsoft rosa ubuntu
 
 clean:
 	rm -rf packer_templates/astralinux/qemu
-	rm -f packer_templates/basealt/*.box
+	rm -rf packer_templates/basealt/qemu
+	rm -rf packer_templates/basealt/virtualbox-iso
 	rm -rf packer_templates/debian/qemu
 	rm -rf packer_templates/debian/virtualbox-iso
 	rm -f packer_templates/fedora/*.box
@@ -50,21 +51,21 @@ clean:
 	rm -rf packer_templates/ubuntu/qemu
 	rm -rf packer_templates/ubuntu/virtualbox-iso
 
-astralinux: smolensk-1.6 smolensk-1.7 smolensk-1.7-fly smolensk-1.8.libvirt smolensk-1.8-fly.libvirt
+astralinux: smolensk-1.6.libvirt smolensk-1.6-fly.libvirt smolensk-1.7.libvirt smolensk-1.7-fly.libvirt smolensk-1.8.libvirt smolensk-1.8-fly.libvirt
 
-smolensk-1.6:
+smolensk-1.6.libvirt:
 	rm -f packer_templates/astralinux/qemu/smolensk-1.6.box
 	cd packer_templates/astralinux; packer build -only qemu.smolensk astra-1.6.pkr.hcl
 
-smolensk-1.6-fly:
+smolensk-1.6-fly.libvirt:
 	rm -f packer_templates/astralinux/qemu/smolensk-1.6-fly.box
 	cd packer_templates/astralinux; packer build -only qemu.smolensk-fly astra-1.6.pkr.hcl
 
-smolensk-1.7:
+smolensk-1.7.libvirt:
 	rm -f packer_templates/astralinux/qemu/smolensk-1.7.box
 	cd packer_templates/astralinux; packer build -only qemu.smolensk astra-1.7.pkr.hcl
 
-smolensk-1.7-fly:
+smolensk-1.7-fly.libvirt:
 	rm -f packer_templates/astralinux/qemu/smolensk-1.7-fly.box
 	cd packer_templates/astralinux; packer build -only qemu.smolensk-fly astra-1.7.pkr.hcl
 
