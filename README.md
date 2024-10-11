@@ -28,3 +28,42 @@
 | Ubuntu 24.04 LTS (Noble Numbat)       | `noble.libvirt`, `noble.vbox`         |
 | Ubuntu 24.04 LTS (Noble Numbat) + KDE | `noble-kde.libvirt`                   |
 
+# Настройка окружения для сборки образов
+
+Тестировалось на Debian 12, Packer 1.11.2, QEMU 7.2.13, VirtualBox 7.0.20.
+
+1. Установить QEMU и VirtualBox.
+1. Установить Packer (может потребоваться VPN).
+   Прямые ссылки:
+   [packer_1.11.1_linux_amd64.zip](https://releases.hashicorp.com/packer/1.11.1/packer_1.11.1_linux_amd64.zip),
+   [packer_1.11.2-1_amd64.deb](https://apt.releases.hashicorp.com/pool/amd64/main/packer_1.11.2-1_amd64.deb).
+1. Установить плагины Packer:
+   ```
+   $ packer init config.pkr.hcl
+   ```
+1. Собрать бокс Debian 12 для libvirt:
+   ```
+   $ cd packer_templates/debian
+   $ packer build -only qemu.bookworm bookworm.pkr.hcl
+   ```
+1. Собрать бокс Debian 12 для VirtualBox:
+   ```
+   $ cd packer_templates/debian
+   $ packer build -only virtualbox-iso.bookworm bookworm.pkr.hcl
+   ```
+
+# Похожие проекты
+
+- [https://github.com/boxcutter](https://github.com/boxcutter)
+- [https://github.com/chef/bento](https://github.com/chef/bento)
+
+# Лицензия
+
+Распространяется под лицензией GNU General Public License v3.0.
+Полный текст лицензии в файле `LICENSE`.
+
+# Контакты
+
+Репозиторий проекта: https://gitlab.com/lab50/rudev.io/boxes
+
+Разработка поддерживается компанией [Лаборатория 50](https://lab50.net).
