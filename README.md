@@ -46,11 +46,55 @@
    $ cd packer_templates/debian
    $ packer build -only qemu.bookworm bookworm.pkr.hcl
    ```
+   или
+   ```
+   $ make bookworm.libvirt
+   ```
 1. Собрать бокс Debian 12 для VirtualBox:
    ```
    $ cd packer_templates/debian
    $ packer build -only virtualbox-iso.bookworm bookworm.pkr.hcl
    ```
+   или
+   ```
+   $ make bookworm.vbox
+   ```
+
+Для тестирования собранного образа с libvirt предоставлен файл `Vagrantfile`,
+который умеет автоматически регистрировать box-файл.
+
+1. Установить libvirt:
+   ```
+   # apt-get -y install libvirt-daemon-system libvirt-clients libvirt-dev virt-manager qemu-system-x86-64
+   ```
+1. Добавить себя в группу `libvirt`:
+   ```
+   $ sudo usermod -aG libvirt $USER
+   ```
+   Чтобы изменения вступили в силу, надо перелогиниться.
+1. Создать пул default в `/var/lib/libvirt/images`:
+   ```
+   $ virsh -c 'qemu:///system' pool-define-as default dir - - - - /var/lib/libvirt/images
+   $ virsh -c 'qemu:///system' pool-start default
+   $ virsh -c 'qemu:///system' pool-autostart default
+   ```
+1. Установить свежий Vagrant — https://www.vagrantup.com/downloads (может потребоваться VPN).
+   Вот прямые ссылки на [vagrant_2.3.0_amd64.deb](https://apt.releases.hashicorp.com/pool/amd64/main/vagrant_2.3.0_amd64.deb) и [vagrant-2.3.0-1.x86_64.rpm](https://rpm.releases.hashicorp.com/fedora/36/x86_64/stable/vagrant-2.3.0-1.x86_64.rpm).
+1. Уставить плагин Vagrant'а для работы с libvirt (может потребоваться VPN):
+   ```
+   $ vagrant plugin install vagrant-libvirt
+   ```
+   В качестве альтернативы можно грузить плагины с rubygems.org:
+   ```
+   $ vagrant plugin install --plugin-clean-sources --plugin-source https://rubygems.org vagrant-libvirt
+   ```
+1. Создать ВМ:
+   ```
+   $ vagrant up bookworm
+   ```
+1. Теперь можно открыть `virt-manager`, там уже должно быть соединение, настроенное на `qemu:///system`.
+   
+   ![](img/virt-manager.png)
 
 # Похожие проекты
 
