@@ -17,9 +17,12 @@
 | Альт 11                               | `salvia.libvirt`, `salvia.vbox`       |
 | Альт 11 + KDE                         | `salvia-kde.libvirt`                  |
 | Debian 12 (bookworm)                  | `bookworm.libvirt`, `bookworm.vbox`   |
+| Debian 12 (bookworm) + KDE            | `bookworm-kde.libvirt`                |
 | ГосJava 11                            | `gosjava11.libvirt`, `gosjava11.vbox` |
 | МОНО                                  | `mono.libvirt`, `mono.vbox`           |
+| Основа 2.11 (Onyx)                    | `onyx.libvirt`                        |
 | РЕД ОС 7.3                            | `redos7.libvirt`, `redos7.vbox`       |
+| РЕД ОС 7.3 + MATE                     | `redos7-mate.libvirt`                 |
 | РЕД ОС 8                              | `redos8.libvirt`, `redos8.vbox`       |
 | РЕД ОС 8 + KDE                        | `redos8-kde.libvirt`                  |
 | РОСА «ФРЕШ» 12.5                      | `fresh.libvirt`, `fresh.vbox`         |

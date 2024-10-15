@@ -167,10 +167,6 @@ onyx.libvirt:
 	rm -f packer_templates/nppkt/qemu/onyx.box
 	cd packer_templates/nppkt; packer build -only qemu.onyx onyx.pkr.hcl
 
-onyx-kde:
-	rm -f packer_templates/nppkt/onyx-kde.box
-	cd packer_templates/nppkt; packer build -only qemu.onyx-kde onyx.pkr.hcl
-
 redsoft: redos7.libvirt redos7.vbox redos7-mate.libvirt redos8.libvirt redos8.vbox redos8-kde.libvirt
 
 redos7.libvirt:
