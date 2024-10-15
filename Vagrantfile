@@ -29,6 +29,31 @@ $vms = {
     "orig-fedora" => "generic/fedora35"
 }
 
+def is_box_registered(box_name)
+    box_list_output = `vagrant box list`
+    return box_list_output.include? "#{box_name} "
+end
+
+def delete_box(box_name)
+    system("vagrant box remove --all #{box_name} > /dev/null")
+    image_prefix = box_name.gsub("/", "-VAGRANTSLASH-") + "_vagrant_box_image_"
+    vol_list_output = `virsh -c '#{$libvirt_uri}' vol-list default | awk '{print $1}'`
+    vol_list_output.split("\n").each do |line|
+        if line.include? image_prefix
+            puts "В хранилище libvirt обнаружен #{line}."
+            system("virsh -c '#{$libvirt_uri}' vol-delete --pool #{$pool} #{line} > /dev/null")
+        end
+    end
+    system("virsh -c '#{$libvirt_uri}' pool-refresh #{$pool} > /dev/null")
+end
+
+def register_vm(config, hostname, box_name)
+    config.vm.define hostname, default: true do |node|
+        node.vm.hostname = hostname
+        node.vm.box = box_name
+    end
+end
+
 # Анализ аргументов.
 $command = ""
 $name = ""
@@ -49,27 +74,20 @@ if ($command == "up") and (not $name.empty?) and (not $name.start_with?("orig-")
         puts "Неизвестная ВМ #{$name}."
         exit(1)
     end
-
     box_path = $vms[$name]
-    box_name = "test/" + File.basename(box_path, ".box")
-    image = "test-VAGRANTSLASH-#{File.basename(box_path, ".box")}_vagrant_box_image_0_box.img"
     unless File.exists?(box_path)
         puts "Бокс #{box_path} не собран!"
         exit(1)
     end
 
-    puts "Подготовка к созданию тестовой ВМ #{$name}..."
-    system("virsh -c '#{$libvirt_uri}' vol-delete --pool #{$pool} #{image} 2> /dev/null")
-    system("virsh -c '#{$libvirt_uri}' pool-refresh #{$pool}")
-    system("vagrant box remove #{box_name}")
-    system("vagrant box add --name=#{box_name} #{box_path}")
-end
-
-def register_vm(config, hostname, box_name)
-    config.vm.define hostname, default: true do |node|
-        node.vm.hostname = hostname
-        node.vm.box = box_name
+    
+    box_name = "test/" + File.basename(box_path, ".box")
+    puts "Подготовка к созданию ВМ #{$name}. Тестовый бокс: #{box_name}."
+    if is_box_registered(box_name)
+        delete_box(box_name)
     end
+    # Регистрация тестового бокса.
+    system("vagrant box add --name=#{box_name} #{box_path}")
 end
 
 Vagrant.configure("2") do |config|
@@ -85,7 +103,6 @@ Vagrant.configure("2") do |config|
         libvirt.channel :type => "spicevmc", :target_name => "com.redhat.spice.0", :target_type => "virtio"
         libvirt.redirdev :type => "spicevmc"
         libvirt.default_prefix = ""
-        libvirt.id_ssh_key_file = "/home/#{$login}/.ssh/id_rsa"
     end
     config.ssh.insert_key = false
     config.ssh.keep_alive = false

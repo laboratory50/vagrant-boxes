@@ -38,7 +38,7 @@
 1. Установить QEMU и VirtualBox.
 1. Установить Packer (может потребоваться VPN).
    Прямые ссылки:
-   [packer_1.11.1_linux_amd64.zip](https://releases.hashicorp.com/packer/1.11.1/packer_1.11.1_linux_amd64.zip),
+   [packer_1.11.2_linux_amd64.zip](https://releases.hashicorp.com/packer/1.11.2/packer_1.11.2_linux_amd64.zip),
    [packer_1.11.2-1_amd64.deb](https://apt.releases.hashicorp.com/pool/amd64/main/packer_1.11.2-1_amd64.deb).
 1. Установить плагины Packer:
    ```
