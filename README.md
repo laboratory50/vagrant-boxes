@@ -71,12 +71,12 @@
    $ packer build -only virtualbox-iso.bookworm bookworm.pkr.hcl
    ```
 
-Для тестирования собранного образа с libvirt предоставлен файл `Vagrantfile`,
+Для тестирования собранного образа на локальном сервере libvirt предоставлен файл `Vagrantfile`,
 который умеет автоматически регистрировать box-файл.
 
 1. Установить libvirt:
    ```
-   # apt-get -y install libvirt-daemon-system libvirt-clients libvirt-dev virt-manager qemu-system-x86-64
+   # apt-get -y install libvirt-daemon-system libvirt-clients qemu-system-x86-64
    ```
 1. Добавить себя в группу `libvirt`:
    ```
@@ -89,21 +89,32 @@
    $ virsh -c 'qemu:///system' pool-start default
    $ virsh -c 'qemu:///system' pool-autostart default
    ```
-1. Установить свежий Vagrant — https://www.vagrantup.com/downloads (может потребоваться VPN).
-   Вот прямые ссылки на [vagrant_2.3.0_amd64.deb](https://apt.releases.hashicorp.com/pool/amd64/main/vagrant_2.3.0_amd64.deb) и [vagrant-2.3.0-1.x86_64.rpm](https://rpm.releases.hashicorp.com/fedora/36/x86_64/stable/vagrant-2.3.0-1.x86_64.rpm).
+1. Скачать Vagrant с https://www.vagrantup.com/downloads (может потребоваться VPN).
+   Вот прямые ссылки на [vagrant_2.3.7-1_amd64.deb](https://releases.hashicorp.com/vagrant/2.3.7/vagrant_2.3.7-1_amd64.deb) и [vagrant-2.3.7-1.x86_64.rpm](https://releases.hashicorp.com/vagrant/2.3.7/vagrant-2.3.7-1.x86_64.rpm).
+1. Установите Vagrant:
+   ```
+   $ sudo dpkg -i vagrant_2.3.7-1_amd64.deb
+   ```
 1. Уставить плагин Vagrant'а для работы с libvirt (может потребоваться VPN):
    ```
    $ vagrant plugin install vagrant-libvirt
    ```
    В качестве альтернативы можно грузить плагины с rubygems.org:
    ```
+   $ sudo apt-get install -y build-essential libvirt-dev
+   $ export VAGRANT_ALLOW_PLUGIN_SOURCE_ERRORS=1
    $ vagrant plugin install --plugin-clean-sources --plugin-source https://rubygems.org vagrant-libvirt
    ```
 1. Создать ВМ:
    ```
    $ vagrant up bookworm
    ```
-1. Теперь можно открыть `virt-manager`, там уже должно быть соединение, настроенное на `qemu:///system`.
+1. Подключиться к созданной ВМ по SSH можно следующим образом:
+   ```
+   $ vagrant ssh bookworm
+   ```
+   Чтобы работать с ВМ при помощи графического интерфейса, установите приложение `virt-manager`,
+   там уже должно быть соединение, настроенное на `qemu:///system`.
    
    ![](img/virt-manager.png)
 

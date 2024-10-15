@@ -1,4 +1,4 @@
-$server = "localhost"
+$libvirt_uri = "qemu:///system"
 $pool = "default"
 $login = ENV["USER"]
 $vms = {
@@ -50,7 +50,6 @@ if ($command == "up") and (not $name.empty?) and (not $name.start_with?("orig-")
         exit(1)
     end
 
-    libvirt_url = "qemu+tcp://#{$server}/system"
     box_path = $vms[$name]
     box_name = "test/" + File.basename(box_path, ".box")
     image = "test-VAGRANTSLASH-#{File.basename(box_path, ".box")}_vagrant_box_image_0_box.img"
@@ -60,8 +59,8 @@ if ($command == "up") and (not $name.empty?) and (not $name.start_with?("orig-")
     end
 
     puts "Подготовка к созданию тестовой ВМ #{$name}..."
-    system("virsh -c '#{libvirt_url}' vol-delete --pool #{$pool} #{image} 2> /dev/null")
-    system("virsh -c '#{libvirt_url}' pool-refresh #{$pool}")
+    system("virsh -c '#{$libvirt_uri}' vol-delete --pool #{$pool} #{image} 2> /dev/null")
+    system("virsh -c '#{$libvirt_uri}' pool-refresh #{$pool}")
     system("vagrant box remove #{box_name}")
     system("vagrant box add --name=#{box_name} #{box_path}")
 end
@@ -77,9 +76,7 @@ Vagrant.configure("2") do |config|
     # Обшие настройки.
     config.vm.synced_folder ".", "/vagrant", disabled: true
     config.vm.provider :libvirt do |libvirt|
-        libvirt.host = $server
-        libvirt.username = $login
-        libvirt.uri = "qemu+tcp://" + $server + "/system"
+        libvirt.uri = $libvirt_uri
         libvirt.storage_pool_name = $pool
         libvirt.memory = 5000
         libvirt.cpus = 3
@@ -87,7 +84,6 @@ Vagrant.configure("2") do |config|
         libvirt.graphics_ip = "0.0.0.0"
         libvirt.channel :type => "spicevmc", :target_name => "com.redhat.spice.0", :target_type => "virtio"
         libvirt.redirdev :type => "spicevmc"
-        libvirt.connect_via_ssh = true
         libvirt.default_prefix = ""
         libvirt.id_ssh_key_file = "/home/#{$login}/.ssh/id_rsa"
     end
