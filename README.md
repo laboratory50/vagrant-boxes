@@ -46,21 +46,29 @@
    ```
 1. Собрать бокс Debian 12 для libvirt:
    ```
+   $ make bookworm.libvirt
+   ```
+   или
+   ```
    $ cd packer_templates/debian
    $ packer build -only qemu.bookworm bookworm.pkr.hcl
    ```
-   или
+   или указав собственный ISO:
    ```
-   $ make bookworm.libvirt
+   $ cd packer_templates/debian
+   $ packer build -only qemu.bookworm \
+       -var 'iso_url=./debian-12.6.0-amd64-netinst.iso' \
+       -var 'iso_checksum=md5:462e540d1ba2ca5ecc68ab79c8e3788a' \
+       bookworm.pkr.hcl
    ```
 1. Собрать бокс Debian 12 для VirtualBox:
    ```
-   $ cd packer_templates/debian
-   $ packer build -only virtualbox-iso.bookworm bookworm.pkr.hcl
+   $ make bookworm.vbox
    ```
    или
    ```
-   $ make bookworm.vbox
+   $ cd packer_templates/debian
+   $ packer build -only virtualbox-iso.bookworm bookworm.pkr.hcl
    ```
 
 Для тестирования собранного образа с libvirt предоставлен файл `Vagrantfile`,

@@ -43,7 +43,7 @@ clean:
 	rm -f packer_templates/fedora/*.box
 	rm -rf packer_templates/lab50/qemu
 	rm -rf packer_templates/lab50/virtualbox-iso
-	rm -f packer_templates/nppkt/*.box
+	rm -rf packer_templates/nppkt/qemu
 	rm -rf packer_templates/redsoft/qemu
 	rm -rf packer_templates/redsoft/virtualbox-iso
 	rm -rf packer_templates/rosa/qemu
