@@ -29,43 +29,42 @@ source "qemu" "openeuler2403" {
     shutdown_command = "sudo -S /sbin/shutdown -hP now"
 }
 
-#source "virtualbox-iso" "openeuler" {
-#    iso_url = var.iso_url
-#    iso_checksum = var.iso_checksum
-#    disk_size = 30000
-#    memory = 5120
-#    gfx_controller = "vmsvga"
-#    gfx_vram_size = 33
-#    guest_os_type = "Ubuntu_64"
-#    guest_additions_path = "VBoxGuestAdditions_{{ .Version }}.iso"
-#    guest_additions_mode = "upload"
-#    guest_additions_interface = "sata"
-#    hard_drive_interface = "sata"
-#    iso_interface = "sata"
-#    vboxmanage = [[
-#      "modifyvm",
-#      "{{.Name}}",
-#      "--audio",
-#      "none",
-#      "--nat-localhostreachable1",
-#      "on",
-#    ]]
-#    virtualbox_version_file = ".vbox_version"
-#    http_content = {
-#        "/user-data" = templatefile("${path.root}/ubuntu2404.pkrtpl", {packages = []}),
-#        "/meta-data" = ""
-#    }
-#    ssh_username = "vagrant"
-#    ssh_password = "password"
-#    ssh_timeout = "30m"
-#    vm_name = "${source.name}"
-#    boot_wait = "5s"
-#    boot_command = var.boot_command
-#    shutdown_command = "sudo -S /sbin/shutdown -hP now"
-#}
+source "virtualbox-iso" "openeuler2403" {
+    iso_url = var.iso_url
+    iso_checksum = var.iso_checksum
+    disk_size = 30000
+    memory = 5120
+    gfx_controller = "vmsvga"
+    gfx_vram_size = 33
+    guest_os_type = "Fedora_64"
+    guest_additions_path = "VBoxGuestAdditions_{{ .Version }}.iso"
+    guest_additions_mode = "upload"
+    guest_additions_interface = "sata"
+    hard_drive_interface = "sata"
+    iso_interface = "sata"
+    vboxmanage = [[
+      "modifyvm",
+      "{{.Name}}",
+      "--audio",
+      "none",
+      "--nat-localhostreachable1",
+      "on",
+    ]]
+    virtualbox_version_file = ".vbox_version"
+    http_content = {
+        "/ks.cfg" = templatefile("${path.root}/openeuler2403.pkrtpl", {groups = []})
+    }
+    ssh_username = "vagrant"
+    ssh_password = "password"
+    ssh_timeout = "40m"
+    vm_name = "${source.name}"
+    boot_wait = "5s"
+    boot_command = var.boot_command
+    shutdown_command = "sudo -S /sbin/shutdown -hP now"
+}
 
 build {
-    sources = ["source.qemu.openeuler2403"]
+    sources = ["source.qemu.openeuler2403", "source.virtualbox-iso.openeuler2403"]
     provisioner "shell" {
         scripts = [
             # "${path.root}/../debian/scripts/ru-locale.sh",

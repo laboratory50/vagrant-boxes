@@ -30,7 +30,8 @@
 	jammy.libvirt jammy.vbox \
 	noble.libvirt noble.vbox \
 	noble-kde.libvirt \
-	openeuler2403.libvirt
+	openeuler2403 \
+	openeuler2403.libvirt openeuler2403.vbox
 
 all: astralinux basealt debian fedora lab50 nppkt redsoft rosa ubuntu
 
@@ -229,6 +230,12 @@ noble-kde.libvirt:
 	rm -f packer_templates/ubuntu/qemu/noble-kde.box
 	cd packer_templates/ubuntu; packer build -only qemu.noble-kde noble.pkr.hcl
 
+openeuler2403: openeuler2403.libvirt openeuler2403.vbox
+
 openeuler2403.libvirt:
 	rm -f packer_templates/openeuler/qemu/openeuler2403.box
 	cd packer_templates/openeuler; packer build -only qemu.openeuler2403 openeuler2403.pkr.hcl
+
+openeuler2403.vbox:
+	rm -f packer_templates/openeuler/virtualbox-iso/openeuler2403.box
+	cd packer_templates/openeuler; packer build -only virtualbox-iso.openeuler2403 openeuler2403.pkr.hcl
