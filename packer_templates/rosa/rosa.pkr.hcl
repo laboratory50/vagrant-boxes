@@ -133,8 +133,8 @@ source "qemu" "fresh-kde" {
 
 build {
     sources = [
-        "source.qemu.fresh",
-        "source.virtualbox-iso.fresh",
+        "source.qemu.fresh-server",
+        "source.virtualbox-iso.fresh-server",
         "source.qemu.fresh-kde"
     ]
     provisioner "shell" {
