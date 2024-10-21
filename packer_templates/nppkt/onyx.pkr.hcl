@@ -75,29 +75,8 @@ source "virtualbox-iso" "onyx" {
     shutdown_command = "echo 'password' | sudo -S /sbin/shutdown -hP now"
 }
 
-source "qemu" "bookworm-kde" {
-    iso_url = var.iso_url
-    iso_checksum = var.iso_checksum
-    disk_size = "30000M"
-    memory = 5120
-    format = "qcow2"
-    accelerator = "kvm"
-    http_content = {
-        "/preseed.cfg" = templatefile("${path.root}/bookworm.pkrtpl", {tasks="ssh-server, kde-desktop", boot="/dev/vda"})
-    }
-    ssh_username = "vagrant"
-    ssh_password = "password"
-    ssh_timeout = "60m"
-    vm_name = "${source.name}"
-    net_device = "virtio-net"
-    disk_interface = "virtio"
-    boot_wait = "5s"
-    boot_command = var.boot_command
-    shutdown_command = "echo 'password' | sudo -S /sbin/shutdown -hP now"
-}
-
 build {
-    sources = ["source.qemu.onyx", "source.virtualbox-iso.onyx", "source.qemu.bookworm-kde"]
+    sources = ["source.qemu.onyx", "source.virtualbox-iso.onyx"]
     provisioner "shell" {
         scripts = [
             # "${path.root}//networking.sh",

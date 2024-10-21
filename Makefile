@@ -16,7 +16,7 @@
 	gosjava11.libvirt gosjava11.vbox \
 	mono.libvirt mono.vbox \
 	nppkt \
-	onyx.libvirt \
+	onyx.libvirt onyx.vbox \
 	redsoft \
 	redos7.libvirt redos7.vbox \
 	redos7-mate.libvirt \
@@ -162,11 +162,15 @@ mono.vbox:
 	rm -f packer_templates/lab50/virtualbox-iso/mono.box
 	cd packer_templates/lab50; packer build -only virtualbox-iso.mono mono.pkr.hcl
 
-nppkt: onyx.libvirt
+nppkt: onyx.libvirt onyx.vbox
 
 onyx.libvirt:
 	rm -f packer_templates/nppkt/qemu/onyx.box
 	cd packer_templates/nppkt; packer build -only qemu.onyx onyx.pkr.hcl
+
+onyx.vbox:
+	rm -f packer_templates/nppkt/virtualbox-iso/onyx.box
+	cd packer_templates/nppkt; packer build -only virtualbox-iso.onyx onyx.pkr.hcl
 
 redsoft: redos7.libvirt redos7.vbox redos7-mate.libvirt redos8.libvirt redos8.vbox redos8-kde.libvirt
 
