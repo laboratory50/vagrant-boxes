@@ -58,7 +58,7 @@ source "virtualbox-iso" "noble" {
     }
     ssh_username = "vagrant"
     ssh_password = "password"
-    ssh_timeout = "30m"
+    ssh_timeout = "35m"
     vm_name = "${source.name}"
     boot_wait = "5s"
     boot_command = var.boot_command
