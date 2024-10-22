@@ -64,7 +64,7 @@ source "virtualbox-iso" "onyx" {
     ]]
     virtualbox_version_file = ".vbox_version"
     http_content = {
-        "/preseed.cfg" = templatefile("${path.root}/bookworm.pkrtpl", {tasks="ssh-server", boot="/dev/sda"})
+        "/preseed.cfg" = templatefile("${path.root}/onyx.pkrtpl", {tasks="ssh-server", boot="/dev/sda"})
     }
     ssh_username = "vagrant"
     ssh_password = "password"
