@@ -37,10 +37,4 @@ chmod 440 /etc/sudoers.d/vagrant
 echo 'SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{type}=="1", NAME="ens3"' > /etc/udev/rules.d/70-persistent-net.rules
 echo -e 'NAME="ens3"\nDEVICE="ens3"\nBOOTPROTO=dhcp\nONBOOT=yes\nTYPE=Ethernet' > /etc/sysconfig/network-scripts/ifcfg-ens3
 sed -i 's|repo.openeuler.org|mirror.truenetwork.ru/openeuler|g' /etc/yum.repos.d/openEuler.repo
-dnf remove -y cockpit
-dnf remove -y wayland xorg-x11-utils libX11 fontconfig cairo gdk-pixbuf2 pango libxkbcommon xkeyboard-config
-dnf remove -y gcc boost-chrono boost-atomic boost-timer boost-filesystem boost-system
-dnf remove -y perl perl-devel perl-Filter-Simple perl-Digest perl-Encode perl-Env perl-URI perl-threads
-dnf remove -y samba-common samba-client-libs sssd sssd-common sssd-ad sssd-client sssd-krb5 sssd-ldap
-dnf remove -y rsyslog yum security-tool
 %end

@@ -67,11 +67,9 @@ build {
     sources = ["source.qemu.openeuler2403", "source.virtualbox-iso.openeuler2403"]
     provisioner "shell" {
         scripts = [
-            # "${path.root}/../debian/scripts/ru-locale.sh",
-            # "${path.root}/../debian/scripts/lab50-key.sh",
-            # "${path.root}/../common/vbox.sh",
-            # "${path.root}/../common/qemu.sh",
-            # "${path.root}/../debian/scripts/cleanup.sh",
+            "${path.root}/scripts/cleanup.sh",
+            "${path.root}/../common/vbox.sh",
+            "${path.root}/../common/qemu.sh",
             "${path.root}/../common/vagrant.sh",
             "${path.root}/../common/love.sh",
             "${path.root}/../common/machine-id-and-random-seed.sh",
