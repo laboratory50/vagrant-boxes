@@ -54,14 +54,7 @@ source "virtualbox-iso" "onyx" {
     guest_additions_interface = "sata"
     hard_drive_interface = "sata"
     iso_interface = "sata"
-    vboxmanage = [[
-      "modifyvm",
-      "{{.Name}}",
-      "--audio",
-      "none",
-      "--nat-localhostreachable1",
-      "on",
-    ]]
+    vboxmanage = [["modifyvm", "{{.Name}}", "--audio", "none", "--nat-localhostreachable1", "on"]]
     virtualbox_version_file = ".vbox_version"
     http_content = {
         "/preseed.cfg" = templatefile("${path.root}/onyx.pkrtpl", {tasks="ssh-server", boot="/dev/sda"})

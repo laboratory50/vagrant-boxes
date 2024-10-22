@@ -40,14 +40,7 @@ source "virtualbox-iso" "fresh-server" {
     guest_additions_interface = "sata"
     hard_drive_interface = "sata"
     iso_interface = "sata"
-    vboxmanage = [[
-      "modifyvm",
-      "{{.Name}}",
-      "--audio",
-      "none",
-      "--nat-localhostreachable1",
-      "on",
-    ]]
+    vboxmanage = [["modifyvm", "{{.Name}}", "--audio", "none", "--nat-localhostreachable1", "on"]]
     virtualbox_version_file = ".vbox_version"
     http_directory = "http"
     ssh_username = "vagrant"
