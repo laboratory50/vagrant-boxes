@@ -19,11 +19,8 @@ reboot --eject
 %{ for group in groups ~}
 @${group}
 %{ endfor ~}
-curl
 # Если не установить эту ерунду, то установка падает начиная с 7.3.2.
 grub2-redos-theme
-mc
-rsync
 vim
 %end
 

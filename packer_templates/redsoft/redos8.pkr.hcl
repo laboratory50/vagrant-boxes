@@ -81,7 +81,11 @@ source "qemu" "redos8-kde" {
 build {
     sources = ["source.qemu.redos8", "source.virtualbox-iso.redos8", "source.qemu.redos8-kde"]
     provisioner "shell" {
+        expect_disconnect = true
         scripts = [
+            "${path.root}/scripts/upgrade.sh",
+            "${path.root}/../common/reboot.sh",
+            "${path.root}/scripts/cleanup.sh",
             "${path.root}/../common/x.sh",
             "${path.root}/../common/vagrant.sh",
             "${path.root}/../common/love.sh",

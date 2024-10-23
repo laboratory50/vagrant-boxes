@@ -82,7 +82,11 @@ source "qemu" "redos7-mate" {
 build {
     sources = ["source.qemu.redos7", "source.virtualbox-iso.redos7", "source.qemu.redos7-mate"]
     provisioner "shell" {
+        expect_disconnect = true
         scripts = [
+            "${path.root}/scripts/upgrade.sh",
+            "${path.root}/../common/reboot.sh",
+            "${path.root}/scripts/cleanup.sh",
             "${path.root}/../common/x.sh",
             "${path.root}/../common/vagrant.sh",
             "${path.root}/../common/love.sh",

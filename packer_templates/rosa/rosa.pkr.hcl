@@ -86,6 +86,7 @@ build {
     provisioner "shell" {
         scripts = [
             "${path.root}/scripts/cleanup.sh",
+            "${path.root}/scripts/upgrade.sh",
             "${path.root}/../common/x.sh",
             "${path.root}/../common/vagrant.sh",
             "${path.root}/../common/love.sh",
