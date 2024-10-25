@@ -103,8 +103,10 @@ build {
         expect_disconnect = true
         scripts = [
             "${path.root}/scripts/install-kde.sh",
-            "${path.root}/scripts/update.sh",
+            "${path.root}/scripts/upgrade.sh",
+            "${path.root}/../common/reboot.sh",
             "${path.root}/scripts/cleanup.sh",
+            "${path.root}/../common/qemu.sh",
             "${path.root}/../common/x.sh",
             "${path.root}/../common/vagrant.sh",
             "${path.root}/../common/love.sh",

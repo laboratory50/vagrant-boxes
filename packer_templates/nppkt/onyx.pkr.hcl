@@ -72,12 +72,10 @@ build {
     sources = ["source.qemu.onyx", "source.virtualbox-iso.onyx"]
     provisioner "shell" {
         scripts = [
-            # "${path.root}//networking.sh",
             "${path.root}/../debian/scripts/ru-locale.sh",
             "${path.root}/../debian/scripts/lab50-key.sh",
             # "${path.root}/../common/vbox.sh",
             # "${path.root}/../common/qemu.sh",
-            # "${path.root}/../debian/cleanup.sh",
             "${path.root}/../common/x.sh",
             "${path.root}/../common/vagrant.sh",
             "${path.root}/../common/love.sh",
