@@ -1,0 +1,7 @@
+[mirror-rosa-x86_64-main]
+name=ROSA $releasever - x86_64 - Main
+baseurl=http://mirror.rosalab.ru/rosa/rosa$releasever/repository/x86_64/main/release/,http://mirror.yandex.ru/rosa/rosa$releasever/repository/x86_64/main/release/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-ROSA
+enabled=1
+cost=999

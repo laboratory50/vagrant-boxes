@@ -1,3 +1,8 @@
+ROOT_DIR = $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
+ifndef DOCKER_REGISTRY
+	DOCKER_REGISTRY = normdoc-nexus.lab50:9000
+endif
+
 .PHONY: all clean \
 	astralinux \
 	smolensk-1.6.libvirt \
@@ -24,6 +29,7 @@
 	redos8-kde.libvirt \
 	rosa \
 	fresh.libvirt fresh.vbox \
+	fresh.docker \
 	fresh-kde.libvirt \
 	chrome-kde cobalt \
 	ubuntu \
@@ -207,6 +213,19 @@ fresh.libvirt:
 fresh.vbox:
 	rm -f packer_templates/rosa/virtualbox-iso/fresh-server.box
 	cd packer_templates/rosa; packer build -only virtualbox-iso.fresh-server rosa.pkr.hcl
+
+fresh.docker:
+ifneq ($(shell id -u), 0)
+	@echo 'You are not root.'
+	exit 1
+endif
+	$(eval PACKAGES = branding-configs-fresh-desktop systemd util-linux rootfiles)
+	$(eval INSTALLROOT = "${ROOT_DIR}/docker/rosa-fresh/installroot")
+	@echo "Building in ${INSTALLROOT}."
+	rm -rf "${INSTALLROOT}"
+	dnf install -y --nogpgcheck --releasever 2021.1 --config "${ROOT_DIR}/docker/rosa-fresh/rosa-main-x86_64.repo" --installroot "${INSTALLROOT}" ${PACKAGES}
+	@echo "Using docker registry ${DOCKER_REGISTRY}."
+	docker build -f "${ROOT_DIR}/docker/rosa-fresh/Dockerfile" -t "${DOCKER_REGISTRY}/rosa-fresh" "${INSTALLROOT}"
 
 fresh-kde.libvirt:
 	rm -f packer_templates/rosa/qemu/fresh-kde.box
