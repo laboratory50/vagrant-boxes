@@ -22,6 +22,7 @@ endif
 	mono.libvirt mono.vbox \
 	nppkt \
 	onyx.libvirt onyx.vbox \
+	onyx.docker \
 	redsoft \
 	redos7.libvirt redos7.vbox \
 	redos7-mate.libvirt \
@@ -177,6 +178,22 @@ onyx.libvirt:
 onyx.vbox:
 	rm -f packer_templates/nppkt/virtualbox-iso/onyx.box
 	cd packer_templates/nppkt; packer build -only virtualbox-iso.onyx onyx.pkr.hcl
+
+onyx.docker:
+ifneq ($(shell id -u), 0)
+	@echo 'You are not root.'
+	exit 1
+endif
+ifndef OSNOVA_CREDENTIALS
+	@echo 'Environment variable OSNOVA_CREDENTIALS not found.'
+	exit 1
+endif
+	$(eval INSTALLROOT = "${ROOT_DIR}/docker/nppkt/installroot")
+	@echo "Building in ${INSTALLROOT}."
+	rm -rf "${INSTALLROOT}"
+	mmdebstrap --mode=unshare --keyring=./osnova.asc --include=systemd-container --aptopt='APT::Install-Recommends false' --aptopt='APT::AutoRemove::SuggestsImportant false' --aptopt='APT::AutoRemove::RecommendsImportant false' --aptopt='Acquire::Languages "none"' --merged-usr --components=main,contrib,non-free onyx "${INSTALLROOT}" "https://${OSNOVA_CREDENTIALS}@dl.nppct.ru/onyx/stable/repos/disk1"
+	@echo "Using docker registry ${DOCKER_REGISTRY}."
+	docker build -f "${ROOT_DIR}/docker/nppkt/Dockerfile" -t "${DOCKER_REGISTRY}/nppkt/onyx" "${INSTALLROOT}"
 
 redsoft: redos7.libvirt redos7.vbox redos7-mate.libvirt redos8.libvirt redos8.vbox redos8-kde.libvirt
 
