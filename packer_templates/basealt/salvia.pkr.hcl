@@ -5,7 +5,7 @@ variables {
     # alt-p11-jeos-systemd. Но там нет возможности нормально создать пользователя.
     boot_command = [
         "e<wait><down><down><down><end> ai curl=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<f10>",
-        "<wait10m>",
+        "<wait12m>",
         # Авто-установка завершена. Сейчас будем разбираться с sudo и sshd. А можно ли по-человечески?
         "root<enter><wait>password<enter><wait>",
         "apt-get update<enter><wait60s>",

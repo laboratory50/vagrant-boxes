@@ -61,7 +61,7 @@ source "virtualbox-iso" "onyx" {
     }
     ssh_username = "vagrant"
     ssh_password = "password"
-    ssh_timeout = "45m"
+    ssh_timeout = "70m"
     vm_name = "${source.name}"
     boot_wait = "5s"
     boot_command = var.boot_command

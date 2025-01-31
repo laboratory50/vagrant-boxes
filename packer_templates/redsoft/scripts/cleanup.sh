@@ -14,9 +14,9 @@ sudo dnf remove -y linux-firmware
 # Только на мини-версии без иксов.
 if [ ! -f /usr/bin/Xorg ]
 then
-    sudo dnf remove -y nss nss-sysinit nss-util
+    # sudo dnf remove -y nss nss-sysinit nss-util
     sudo dnf remove -y jansson
-    sudo dnf remove -y libusb1 usbutils
+    # sudo dnf remove -y libusb1 usbutils
 fi
 
 # Удаляем старые ядра.

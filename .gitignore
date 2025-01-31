@@ -1,4 +1,6 @@
 .vagrant
+docker/nppkt/installroot
+docker/rosa/installroot
 *.iso
 *.box
 *.log

@@ -1,7 +1,4 @@
-ROOT_DIR = $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
-ifndef DOCKER_REGISTRY
-	DOCKER_REGISTRY = normdoc-nexus.lab50:9000
-endif
+ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 .PHONY: all clean \
 	astralinux \
@@ -188,12 +185,14 @@ ifndef OSNOVA_CREDENTIALS
 	@echo 'Environment variable OSNOVA_CREDENTIALS not found.'
 	exit 1
 endif
-	$(eval INSTALLROOT = "${ROOT_DIR}/docker/nppkt/installroot")
-	@echo "Building in ${INSTALLROOT}."
+	$(eval NPPKT_DIR = "${ROOT_DIR}/docker/nppkt")
+	$(eval INSTALLROOT = "${NPPKT_DIR}/installroot")
+	@echo "Building in ${INSTALLROOT}..."
 	rm -rf "${INSTALLROOT}"
-	mmdebstrap --mode=unshare --keyring=./osnova.asc --include=systemd-container --aptopt='APT::Install-Recommends false' --aptopt='APT::AutoRemove::SuggestsImportant false' --aptopt='APT::AutoRemove::RecommendsImportant false' --aptopt='Acquire::Languages "none"' --merged-usr --components=main,contrib,non-free onyx "${INSTALLROOT}" "https://${OSNOVA_CREDENTIALS}@dl.nppct.ru/onyx/stable/repos/disk1"
-	@echo "Using docker registry ${DOCKER_REGISTRY}."
-	docker build -f "${ROOT_DIR}/docker/nppkt/Dockerfile" -t "${DOCKER_REGISTRY}/nppkt/onyx" "${INSTALLROOT}"
+	mmdebstrap --mode=unshare --keyring="${NPPKT_DIR}/osnova.asc" --include=systemd-container --aptopt='APT::Install-Recommends false' --aptopt='APT::AutoRemove::SuggestsImportant false' --aptopt='APT::AutoRemove::RecommendsImportant false' --aptopt='Acquire::Languages "none"' --merged-usr --components=main,contrib,non-free onyx "${INSTALLROOT}" "https://${OSNOVA_CREDENTIALS}@dl.nppct.ru/onyx/stable/repos/disk1"
+	echo '' > "${INSTALLROOT}/etc/apt/sources.list"
+	@echo "Creating a docker image..."
+	docker build -f "${NPPKT_DIR}/Dockerfile" -t nppkt/onyx "${INSTALLROOT}"
 
 redsoft: redos7.libvirt redos7.vbox redos7-mate.libvirt redos8.libvirt redos8.vbox redos8-kde.libvirt
 
@@ -236,13 +235,14 @@ ifneq ($(shell id -u), 0)
 	@echo 'You are not root.'
 	exit 1
 endif
+	$(eval ROSA_DIR = "${ROOT_DIR}/docker/rosa")
+	$(eval INSTALLROOT = "${ROSA_DIR}/installroot")
 	$(eval PACKAGES = branding-configs-fresh-desktop systemd util-linux rootfiles)
-	$(eval INSTALLROOT = "${ROOT_DIR}/docker/rosa-fresh/installroot")
-	@echo "Building in ${INSTALLROOT}."
+	@echo "Building in ${INSTALLROOT}..."
 	rm -rf "${INSTALLROOT}"
-	dnf install -y --nogpgcheck --releasever 2021.1 --config "${ROOT_DIR}/docker/rosa-fresh/rosa-main-x86_64.repo" --installroot "${INSTALLROOT}" ${PACKAGES}
-	@echo "Using docker registry ${DOCKER_REGISTRY}."
-	docker build -f "${ROOT_DIR}/docker/rosa-fresh/Dockerfile" -t "${DOCKER_REGISTRY}/rosa-fresh" "${INSTALLROOT}"
+	dnf install -y --nogpgcheck --releasever 2021.1 --config "${ROSA_DIR}/rosa-main-x86_64.repo" --installroot "${INSTALLROOT}" ${PACKAGES}
+	@echo "Creating a docker image..."
+	docker build -f "${ROSA_DIR}/Dockerfile" -t /rosa/2021.1-fresh "${INSTALLROOT}"
 
 fresh-kde.libvirt:
 	rm -f packer_templates/rosa/qemu/fresh-kde.box
