@@ -243,7 +243,8 @@ endif
 	rm -rf "${INSTALLROOT}"
 	dnf install -y --nogpgcheck --releasever 2021.1 --config "${ROSA_DIR}/rosa-main-x86_64.repo" --installroot "${INSTALLROOT}" ${PACKAGES}
 	@echo "Creating a docker image..."
-	docker build -f "${ROSA_DIR}/Dockerfile" -t /rosa/2021.1-fresh "${INSTALLROOT}"
+	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
+	docker build -f "${ROSA_DIR}/Dockerfile" -t rosa/2021.1-fresh --build-arg "created=${CREATED}" "${INSTALLROOT}"
 
 fresh-kde.libvirt:
 	rm -f packer_templates/rosa/qemu/fresh-kde.box
