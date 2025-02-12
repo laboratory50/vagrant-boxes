@@ -192,7 +192,8 @@ endif
 	mmdebstrap --mode=unshare --keyring="${NPPKT_DIR}/osnova.asc" --include=systemd-container --aptopt='APT::Install-Recommends false' --aptopt='APT::AutoRemove::SuggestsImportant false' --aptopt='APT::AutoRemove::RecommendsImportant false' --aptopt='Acquire::Languages "none"' --merged-usr --components=main,contrib,non-free onyx "${INSTALLROOT}" "https://${OSNOVA_CREDENTIALS}@dl.nppct.ru/onyx/stable/repos/disk1"
 	echo '' > "${INSTALLROOT}/etc/apt/sources.list"
 	@echo "Creating a docker image..."
-	docker build -f "${NPPKT_DIR}/Dockerfile" -t nppkt/onyx "${INSTALLROOT}"
+	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
+	docker build -f "${NPPKT_DIR}/Dockerfile" -t nppkt/onyx --build-arg "created=${CREATED}" "${INSTALLROOT}"
 
 redsoft: redos7.libvirt redos7.vbox redos7-mate.libvirt redos8.libvirt redos8.vbox redos8-kde.libvirt
 
