@@ -1,0 +1,16 @@
+FROM debian:bookworm-slim
+COPY lab50.gpg /etc/apt/trusted.gpg.d/lab50.gpg
+RUN chmod 0644 /etc/apt/trusted.gpg.d/lab50.gpg \
+    && echo 'deb http://packages.lab50.net/gosjava/11/ alse17 main' > /etc/apt/sources.list.d/gosjava.list \
+    && apt-get update \
+    && apt-get -y install gosjava-jre \
+    && apt-get -y clean \
+    && rm -rf /var/lib/apt/lists/*
+CMD ["/bin/bash"]
+
+ARG created=unknown
+LABEL org.opencontainers.image.vendor="Лаборатория 50"
+LABEL org.opencontainers.image.authors="Лаборатория 50"
+LABEL org.opencontainers.image.title="ГосJava 11"
+LABEL org.opencontainers.image.version="2025.1"
+LABEL org.opencontainers.image.created=$created

@@ -15,7 +15,7 @@ ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 	bookworm-kde.libvirt \
 	fedora fedora38 fedora38-kde fedora39 fedora39-kde fedora40 fedora40-kde \
 	lab50 \
-	gosjava11.libvirt gosjava11.vbox \
+	gosjava11.libvirt gosjava11.vbox gosjava11.docker \
 	mono.libvirt mono.vbox \
 	nppkt \
 	onyx.libvirt onyx.vbox \
@@ -157,6 +157,11 @@ gosjava11.libvirt:
 gosjava11.vbox:
 	rm -f packer_templates/lab50/virtualbox-iso/gosjava11.box
 	cd packer_templates/lab50; packer build -only virtualbox-iso.gosjava11 gosjava.pkr.hcl
+
+gosjava11.docker:
+	$(eval LAB50_DIR = "${ROOT_DIR}/docker/lab50")
+	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
+	docker build -f "${LAB50_DIR}/Dockerfile.gosjava11" -t lab50/gosjava11 --build-arg "created=${CREATED}" "${LAB50_DIR}"
 
 mono.libvirt:
 	rm -f packer_templates/lab50/qemu/mono.box
