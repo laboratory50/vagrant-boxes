@@ -16,7 +16,7 @@ ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 	fedora fedora38 fedora38-kde fedora39 fedora39-kde fedora40 fedora40-kde \
 	lab50 \
 	gosjava11.libvirt gosjava11.vbox gosjava11.docker \
-	mono.libvirt mono.vbox \
+	mono.libvirt mono.vbox mono.docker \
 	nppkt \
 	onyx.libvirt onyx.vbox \
 	onyx.docker \
@@ -170,6 +170,11 @@ mono.libvirt:
 mono.vbox:
 	rm -f packer_templates/lab50/virtualbox-iso/mono.box
 	cd packer_templates/lab50; packer build -only virtualbox-iso.mono mono.pkr.hcl
+
+mono.docker:
+	$(eval LAB50_DIR = "${ROOT_DIR}/docker/lab50")
+	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
+	docker build -f "${LAB50_DIR}/Dockerfile.mono" -t lab50/mono --build-arg "created=${CREATED}" "${LAB50_DIR}"
 
 nppkt: onyx.libvirt onyx.vbox
 
