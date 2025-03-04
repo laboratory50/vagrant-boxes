@@ -119,6 +119,32 @@
    
    ![](img/virt-manager.png)
 
+# Тестирование
+
+Тестирование образов libvirt с разных Vagrant-серверов:
+```
+$ cd tests
+$ VAGRANT_SERVER_URL=https://vagrant.rudev.io make mono.libvirt
+$ VAGRANT_SERVER_URL=http://delta.lab50/vagrant make mono.libvirt
+```
+
+Тестирование образов VirtualBox с разных Vagrant-серверов:
+```
+$ cd tests
+$ VAGRANT_SERVER_URL=https://vagrant.rudev.io make mono.vbox
+$ VAGRANT_SERVER_URL=http://delta.lab50/vagrant make mono.vbox
+```
+
+Тестирование локальных box-файлов:
+```
+$ cd tests
+$ unset VAGRANT_SERVER_URL
+$ make mono.libvirt
+$ make mono.vbox
+```
+
+Цели тестового `Makefile` совпадают с целяими главного `Makefile`.
+
 # Похожие проекты
 
 - [https://github.com/boxcutter](https://github.com/boxcutter)

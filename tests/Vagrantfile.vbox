@@ -1,0 +1,32 @@
+require "json"
+
+$cpus = 2
+$memory = 2048
+
+def register_vm(config, hostname, box)
+    config.vm.define hostname, default: true do |vm|
+        vm.vm.hostname = hostname
+        vm.vm.box = box
+        vm.vm.provider "virtualbox" do |vbox|
+            vbox.name = hostname
+        end
+    end
+end
+
+Vagrant.configure("2") do |config|
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+    config.vm.provider :virtualbox do |vbox|
+        vbox.cpus = $cpus
+        vbox.memory = $memory
+    end
+    config.ssh.insert_key = false
+    config.ssh.keep_alive = false
+
+    # Register VMs.
+    file = File.open "images.json"
+    images = JSON.load file
+    file.close
+    images.each do |hostname, image_info|
+        register_vm(config, hostname, image_info['image'])
+    end
+end

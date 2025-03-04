@@ -1,0 +1,57 @@
+{
+    "test-aronia": {
+        "image": "basealt/aronia",
+        "local_libvirt_image": "packer_templates/basealt/qemu/aronia.box",
+        "local_vbox_image": "packer_templates/basealt/virtualbox-iso/aronia.box"
+    },
+    "test-bookworm": {
+        "image": "lab50/bookworm",
+        "local_libvirt_image": "packer_templates/debian/qemu/bookworm.box",
+        "local_vbox_image": "packer_templates/debian/virtualbox-iso/bookworm.box"
+    },
+    "test-fresh": {
+        "image": "rosa/2021.1-fresh",
+        "local_libvirt_image": "packer_templates/rosa/qemu/fresh-server.box",
+        "local_vbox_image": "packer_templates/rosa/virtualbox-iso/fresh-server.box"
+    },
+    "test-gosjava11": {
+        "image": "lab50/gosjava11",
+        "local_libvirt_image": "packer_templates/lab50/qemu/gosjava11.box",
+        "local_vbox_image": "packer_templates/lab50/virtualbox-iso/gosjava11.box"
+    },
+    "test-jammy": {
+        "image": "lab50/jammy",
+        "local_libvirt_image": "packer_templates/ubuntu/qemu/jammy.box",
+        "local_vbox_image": "packer_templates/ubuntu/virtualbox-iso/jammy.box"
+    },
+    "test-mono": {
+        "image": "lab50/mono",
+        "local_libvirt_image": "packer_templates/lab50/qemu/mono.box",
+        "local_vbox_image": "packer_templates/lab50/virtualbox-iso/mono.box"
+    },
+    "test-noble": {
+        "image": "lab50/noble",
+        "local_libvirt_image": "packer_templates/ubuntu/qemu/noble.box",
+        "local_vbox_image": "packer_templates/ubuntu/virtualbox-iso/noble.box"
+    },
+    "test-onyx": {
+        "image": "nppct/onyx",
+        "local_libvirt_image": "packer_templates/nppct/qemu/onyx.box",
+        "local_vbox_image": "packer_templates/nppct/virtualbox-iso/onyx.box"
+    },
+    "test-redos7": {
+        "image": "redsoft/redos7",
+        "local_libvirt_image": "packer_templates/redsoft/qemu/redos7.box",
+        "local_vbox_image": "packer_templates/redsoft/virtualbox-iso/redos7.box"
+    },
+    "test-redos8": {
+        "image": "redsoft/redos8",
+        "local_libvirt_image": "packer_templates/redsoft/qemu/redos8.box",
+        "local_vbox_image": "packer_templates/redsoft/virtualbox-iso/redos8.box"
+    },
+    "test-salvia": {
+        "image": "basealt/salvia",
+        "local_libvirt_image": "packer_templates/basealt/qemu/salvia.box",
+        "local_vbox_image": "packer_templates/basealt/virtualbox-iso/salvia.box"
+    }
+}
