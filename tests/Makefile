@@ -1,4 +1,5 @@
 DEFAULT_CMD := cat /etc/os-release
+ASTRA_CMD := cat /etc/astra_version
 
 .PHONY: bookworm.libvirt bookworm.vbox \
 	fresh.libvirt fresh.vbox \
@@ -8,7 +9,10 @@ DEFAULT_CMD := cat /etc/os-release
 	noble.libvirt noble.vbox \
 	onyx.libvirt onyx.vbox onyx.docker \
 	redos7.libvirt redos7.vbox \
-	redos8.libvirt redos8.vbox
+	redos8.libvirt redos8.vbox \
+	salvia.libvirt salvia.vbox \
+	smolensk-1.7.libvirt \
+	smolensk-1.8.libvirt
 
 bookworm.libvirt:
 	@echo 'Creating Debian bookworm vm using libvirt...'
@@ -90,3 +94,19 @@ redos8.libvirt:
 redos8.vbox:
 	@echo 'Creating РЕД ОС 8 vm using VirtualBox...'
 	./test-vm.sh test-redos8 Vagrantfile.vbox "${DEFAULT_CMD}"
+
+salvia.libvirt:
+	@echo 'Creating Alt 11 vm using libvirt...'
+	./test-vm.sh test-salvia Vagrantfile.libvirt "${DEFAULT_CMD}"
+
+salvia.vbox:
+	@echo 'Creating Alt 11 vm using VirtualBox...'
+	./test-vm.sh test-salvia Vagrantfile.vbox "${DEFAULT_CMD}"
+
+smolensk-1.7.libvirt:
+	@echo 'Creating Astra 1.7 vm using libvirt...'
+	./test-vm.sh test-smolensk-1.7 Vagrantfile.libvirt "${ASTRA_CMD}"
+
+smolensk-1.8.libvirt:
+	@echo 'Creating Astra 1.8 vm using libvirt...'
+	./test-vm.sh test-smolensk-1.8 Vagrantfile.libvirt "${ASTRA_CMD}"

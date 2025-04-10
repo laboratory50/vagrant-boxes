@@ -53,5 +53,13 @@
         "image": "basealt/salvia",
         "local_libvirt_image": "packer_templates/basealt/qemu/salvia.box",
         "local_vbox_image": "packer_templates/basealt/virtualbox-iso/salvia.box"
+    },
+    "test-smolensk-1.7": {
+        "image": "astralinux/smolensk-1.7",
+        "local_libvirt_image": "packer_templates/astralinux/qemu/smolensk-1.7.box"
+    },
+    "test-smolensk-1.8": {
+        "image": "astralinux/smolensk-1.8",
+        "local_libvirt_image": "packer_templates/astralinux/qemu/smolensk-1.8.box"
     }
 }
