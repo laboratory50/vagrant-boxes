@@ -1,5 +1,7 @@
 DEFAULT_CMD := cat /etc/os-release
 ASTRA_CMD := cat /etc/astra_version
+MONO_CMD := mono --version
+GOSJAVA_CMD := java -version
 
 .PHONY: bookworm.libvirt bookworm.vbox \
 	fresh.libvirt fresh.vbox \
@@ -32,14 +34,16 @@ fresh.vbox:
 
 gosjava11.libvirt:
 	@echo 'Creating ГосJava 11 vm using libvirt...'
-	./test-vm.sh test-gosjava11 Vagrantfile.libvirt 'java -version'
+	./test-vm.sh test-gosjava11 Vagrantfile.libvirt "${GOSJAVA_CMD}"
 
 gosjava11.vbox:
 	@echo 'Creating ГосJava 11 vm using VirtualBox...'
-	./test-vm.sh test-gosjava11 Vagrantfile.vbox 'java -version'
+	./test-vm.sh test-gosjava11 Vagrantfile.vbox "${GOSJAVA_CMD}"
 
 gosjava11.docker:
 	@echo 'Creating ГосJava 11 container...'
+	docker container run --name test-gosjava11 lab50/gosjava11:latest ${GOSJAVA_CMD}
+	docker rm test-gosjava11
 
 jammy.libvirt:
 	@echo 'Creating Ubuntu Jammy Jellyfish (22.04 LTS) vm using libvirt...'
@@ -51,14 +55,16 @@ jammy.vbox:
 
 mono.libvirt:
 	@echo 'Creating MONO vm using libvirt...'
-	./test-vm.sh test-mono Vagrantfile.libvirt 'mono --version'
+	./test-vm.sh test-mono Vagrantfile.libvirt "${MONO_CMD}"
 
 mono.vbox:
 	@echo 'Creating MONO vm using VirtualBox...'
-	./test-vm.sh test-mono Vagrantfile.vbox 'mono --version'
+	./test-vm.sh test-mono Vagrantfile.vbox "${MONO_CMD}"
 
 mono.docker:
 	@echo 'Creating MONO container...'
+	docker container run --name test-mono lab50/mono:latest ${MONO_CMD}
+	docker rm test-mono
 
 noble.libvirt:
 	@echo 'Creating Ubuntu Noble Numbat (24.04 LTS) vm using libvirt...'
@@ -78,6 +84,8 @@ onyx.vbox:
 
 onyx.docker:
 	@echo 'Creating OSnova container...'
+	docker container run --name test-onyx nppct/onyx:latest ${DEFAULT_CMD}
+	docker rm test-onyx
 
 redos7.libvirt:
 	@echo 'Creating РЕД ОС 7 vm using libvirt...'
