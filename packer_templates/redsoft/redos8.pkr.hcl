@@ -1,6 +1,9 @@
 variables {
     iso_url = "https://files.red-soft.ru/redos/8.0/x86_64/iso/redos-8-20241206.4-Everything-x86_64-DVD1.iso"
     iso_checksum = "md5:26f31cf86d31f609b4754e1d24f00043"
+    boot_command = [
+        "<up><wait>e<wait><down><down><end> inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<f10>"
+    ]
 }
 
 source "qemu" "redos8" {
@@ -20,9 +23,7 @@ source "qemu" "redos8" {
     net_device = "virtio-net"
     disk_interface = "virtio"
     boot_wait = "5s"
-    boot_command = [
-        "<up><wait><tab> inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"
-    ]
+    boot_command = var.boot_command
     shutdown_command = "echo 'password' | sudo -S shutdown -P now"
 }
 
@@ -49,9 +50,7 @@ source "virtualbox-iso" "redos8" {
     ssh_timeout = "50m"
     vm_name = "${source.name}"
     boot_wait = "5s"
-    boot_command = [
-        "<up><wait><tab> inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"
-    ]
+    boot_command = var.boot_command
     shutdown_command = "echo 'password' | sudo -S shutdown -P now"
 }
 
@@ -72,9 +71,7 @@ source "qemu" "redos8-kde" {
     net_device = "virtio-net"
     disk_interface = "virtio"
     boot_wait = "5s"
-    boot_command = [
-        "<up><wait><tab> inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"
-    ]
+    boot_command = var.boot_command
     shutdown_command = "echo 'password' | sudo -S shutdown -P now"
 }
 
