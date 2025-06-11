@@ -1,6 +1,6 @@
 variables {
-    iso_url = "https://files.red-soft.ru/redos/8.0/x86_64/iso/redos-8-20240218.1-Everything-x86_64-DVD1.iso"
-    iso_checksum = "md5:49c93e5c4ec8cef4ce44386af072b1b7"
+    iso_url = "https://files.red-soft.ru/redos/8.0/x86_64/iso/redos-8-20241206.4-Everything-x86_64-DVD1.iso"
+    iso_checksum = "md5:26f31cf86d31f609b4754e1d24f00043"
 }
 
 source "qemu" "redos8" {
