@@ -11,7 +11,7 @@
 ("/evms/control" action "write" control commit)
 ("/evms/control" action "write" control close)
 ; установка пакетов операционной системы
-("pkg-init" action "write")
+("pkg-install-init" action "write")
 ; установка только базовой системы (дополнительные группы пакетов из pkg-groups.tar указываются по именам через пробел)
 ("/pkg-install" action "write" lists "" auto #t)
 ("/preinstall" action "write")

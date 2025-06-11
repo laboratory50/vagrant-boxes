@@ -1,10 +1,10 @@
 variables {
-    iso_url = "https://mirror.yandex.ru/altlinux-starterkits/x86_64/release/alt-p11-jeos-systemd-20240529-x86_64.iso"
-    iso_checksum = "md5:66d7f05d4b83354c322a1d7692717403"
+    iso_url = "https://mirror.yandex.ru/altlinux-starterkits/x86_64/release/alt-p11-jeos-systemd-20250312-x86_64.iso"
+    iso_checksum = "md5:54ba1e02c9749026cd81291b72f51961"
     # По состоянию на 26.08.2024 автоустановка Альт 11 работает только у дистрибутива
     # alt-p11-jeos-systemd. Но там нет возможности нормально создать пользователя.
     boot_command = [
-        "e<wait><down><down><down><end> ai curl=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<f10>",
+        "e<wait><down><down><down><down><end> ai curl=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<f10>",
         "<wait12m>",
         # Авто-установка завершена. Сейчас будем разбираться с sudo и sshd. А можно ли по-человечески?
         "root<enter><wait>password<enter><wait>",

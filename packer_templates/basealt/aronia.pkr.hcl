@@ -4,8 +4,8 @@
 # https://www.altlinux.org/Simply_Linux_10
 
 variables {
-    iso_url = "http://ftp.altlinux.org/pub/distributions/ALTLinux/p10/images/server/x86_64/alt-server-10.2-x86_64.iso"
-    iso_checksum = "md5:28827cc95d0dc18c1fb7ecccf0ddcac8"
+    iso_url = "http://ftp.altlinux.org/pub/distributions/ALTLinux/p10/images/server/x86_64/alt-server-10.4-x86_64.iso"
+    iso_checksum = "md5:81376b3de7e179bd460311b12c08bab2"
     boot_command = [
         "e<wait><down><down><down><end> ai curl=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<f10>",
         "<wait22m>",
