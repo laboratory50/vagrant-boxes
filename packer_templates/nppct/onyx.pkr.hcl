@@ -16,8 +16,8 @@ variables {
         "osnova-license/license=true",
         "<enter>"
     ]
-    iso_url = "onyx3-3.0-disk1-25.11.2024_14.34.iso"
-    iso_checksum = "md5:ecefec2e0ebb482088ea81664cbc639e"
+    iso_url = "onyx3-3.0.1-disk1-29.04.2025_07.18.iso"
+    iso_checksum = "md5:480cd8358ebefe9a98f4116468cc595a"
 }
 
 source "qemu" "onyx" {
