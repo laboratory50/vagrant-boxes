@@ -3,8 +3,8 @@ variables {
     boot_command = [
         "<up><tab><wait><end> inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"
     ]
-    iso_url = "https://mirror.truenetwork.ru/openeuler/openEuler-24.03-LTS/ISO/x86_64/openEuler-24.03-LTS-x86_64-dvd.iso"
-    iso_checksum = "sha256:786b9683659512e71c978c34aea806a97ed6cacf04e1b0a22017a50eec582cbe"
+    iso_url = "https://ru-repo.openeuler.org/openEuler-24.03-LTS-SP1/ISO/x86_64/openEuler-24.03-LTS-SP1-x86_64-dvd.iso"
+    iso_checksum = "sha256:641c8ef45fa348126b9e44056ff95a2eef913f82ddcc16f1f99fa8726edb9837"
 }
 
 source "qemu" "openeuler2403" {

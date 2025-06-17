@@ -36,5 +36,5 @@ echo -e 'Defaults:vagrant !requiretty\n%vagrant ALL=(ALL) NOPASSWD: ALL\n' > /et
 chmod 440 /etc/sudoers.d/vagrant
 echo 'SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{type}=="1", NAME="ens3"' > /etc/udev/rules.d/70-persistent-net.rules
 echo -e 'NAME="ens3"\nDEVICE="ens3"\nBOOTPROTO=dhcp\nONBOOT=yes\nTYPE=Ethernet' > /etc/sysconfig/network-scripts/ifcfg-ens3
-sed -i 's|repo.openeuler.org|mirror.truenetwork.ru/openeuler|g' /etc/yum.repos.d/openEuler.repo
+sed -i 's|repo.openeuler.org|ru-repo.openeuler.org|g' /etc/yum.repos.d/openEuler.repo
 %end
