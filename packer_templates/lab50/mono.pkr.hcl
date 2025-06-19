@@ -15,8 +15,8 @@ variables {
         "console-keymaps-at/keymap=us ",
         "<enter>"
     ]
-    iso_url = "https://cdimage.debian.org/cdimage/release/12.6.0/amd64/iso-dvd/debian-12.6.0-amd64-DVD-1.iso"
-    iso_checksum = "md5:462e540d1ba2ca5ecc68ab79c8e3788a"
+    iso_url = "https://cdimage.debian.org/cdimage/release/12.11.0/amd64/iso-dvd/debian-12.11.0-amd64-DVD-1.iso"
+    iso_checksum = "sha256:be966aa53a436b3cfb96446d000e6c145a188e6df3dede4e2741161423aa4221"
 }
 
 source "qemu" "mono" {
