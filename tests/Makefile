@@ -3,7 +3,8 @@ ASTRA_CMD := cat /etc/astra_version
 MONO_CMD := mono --version
 GOSJAVA_CMD := java -version
 
-.PHONY: bookworm.libvirt bookworm.vbox \
+.PHONY: aronia.libvirt aronia.vbox \
+	bookworm.libvirt bookworm.vbox \
 	fresh.libvirt fresh.vbox \
 	gosjava11.libvirt gosjava11.vbox gosjava11.docker \
 	jammy.libvirt jammy.vbox \
@@ -15,6 +16,14 @@ GOSJAVA_CMD := java -version
 	salvia.libvirt salvia.vbox \
 	smolensk-1.7.libvirt \
 	smolensk-1.8.libvirt
+
+aronia.libvirt:
+	@echo 'Creating Alt 10 vm using libvirt...'
+	./test-vm.sh test-aronia Vagrantfile.libvirt "${DEFAULT_CMD}"
+
+aronia.vbox:
+	@echo 'Creating Alt 10 vm using VirtualBox...'
+	./test-vm.sh test-aronia Vagrantfile.vbox "${DEFAULT_CMD}"
 
 bookworm.libvirt:
 	@echo 'Creating Debian bookworm vm using libvirt...'
@@ -86,6 +95,14 @@ onyx.docker:
 	@echo 'Creating OSnova container...'
 	docker container run --name test-onyx nppct/onyx:latest ${DEFAULT_CMD}
 	docker rm test-onyx
+
+openeuler2403.libvirt:
+	@echo 'Creating openEuler vm using libvirt...'
+	./test-vm.sh test-openeuler2403 Vagrantfile.libvirt "${DEFAULT_CMD}"
+
+openeuler2403.vbox:
+	@echo 'Creating openEuler vm using VirtualBox...'
+	./test-vm.sh test-openeuler2403 Vagrantfile.vbox "${DEFAULT_CMD}"
 
 redos7.libvirt:
 	@echo 'Creating РЕД ОС 7 vm using libvirt...'

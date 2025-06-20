@@ -39,6 +39,11 @@
         "local_libvirt_image": "packer_templates/nppct/qemu/onyx.box",
         "local_vbox_image": "packer_templates/nppct/virtualbox-iso/onyx.box"
     },
+    "test-openeuler2403": {
+        "image": "openeuler/openeuler2403",
+        "local_libvirt_image": "packer_templates/openeuler/qemu/openeuler2403.box",
+        "local_vbox_image": "packer_templates/openeuler/virtualbox-iso/openeuler2403.box"
+    },
     "test-redos7": {
         "image": "redsoft/redos7",
         "local_libvirt_image": "packer_templates/redsoft/qemu/redos7.box",
