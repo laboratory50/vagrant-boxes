@@ -11,12 +11,13 @@ variables {
         "<wait22m>",
         # Авто-установка завершена. Сейчас будем разбираться с sudo и sshd. А можно ли по-человечески?
         "root<enter><wait>password<enter><wait>",
-        "apt-get update<enter><wait30s>",
-        "apt-get install -y vim-console wget sudo openssh<enter><wait1m>",
+        "apt-get update<enter><wait1m>",
+        "apt-get install -y vim-console wget sudo openssh<enter><wait2m>",
         "sed -i '/PasswordAuthentication yes/s/# //g' /etc/openssh/sshd_config<enter><wait>",
         "echo -e 'Defaults:vagrant !requiretty\\n%vagrant ALL=(ALL) NOPASSWD: ALL\n' > /etc/sudoers.d/vagrant<enter><wait>",
         "chmod 440 /etc/sudoers.d/vagrant<enter><wait>",
-        "cp -r /etc/net/ifaces/ens3 /etc/net/ifaces/ens7<enter><wait>",
+        "echo 'SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{type}==\"1\", NAME=\"eth0\"' > /etc/udev/rules.d/70-persistent-net.rules<enter><wait>",
+        "echo -e 'BOOTPROTO=dhcp\\nTYPE=eth\\nCONFIG_WIRELESS=no' > /etc/net/ifaces/eth0/options<enter><wait>",
         "systemctl enable sshd && systemctl start sshd<enter>"
     ]
 }

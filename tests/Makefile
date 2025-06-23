@@ -1,5 +1,6 @@
-DEFAULT_CMD := cat /etc/os-release
-ASTRA_CMD := cat /etc/astra_version
+DEFAULT_CMD := sudo ip a; cat /etc/os-release
+ALT_CMD := sudo ip a; cat /etc/altlinux-release
+ASTRA_CMD := sudo ip a; cat /etc/astra_version
 MONO_CMD := mono --version
 GOSJAVA_CMD := java -version
 
@@ -19,11 +20,11 @@ GOSJAVA_CMD := java -version
 
 aronia.libvirt:
 	@echo 'Creating Alt 10 vm using libvirt...'
-	./test-vm.sh test-aronia Vagrantfile.libvirt "${DEFAULT_CMD}"
+	./test-vm.sh test-aronia Vagrantfile.libvirt "${ALT_CMD}"
 
 aronia.vbox:
 	@echo 'Creating Alt 10 vm using VirtualBox...'
-	./test-vm.sh test-aronia Vagrantfile.vbox "${DEFAULT_CMD}"
+	./test-vm.sh test-aronia Vagrantfile.vbox "${ALT_CMD}"
 
 bookworm.libvirt:
 	@echo 'Creating Debian bookworm vm using libvirt...'
@@ -122,11 +123,11 @@ redos8.vbox:
 
 salvia.libvirt:
 	@echo 'Creating Alt 11 vm using libvirt...'
-	./test-vm.sh test-salvia Vagrantfile.libvirt "${DEFAULT_CMD}"
+	./test-vm.sh test-salvia Vagrantfile.libvirt "${ALT_CMD}"
 
 salvia.vbox:
 	@echo 'Creating Alt 11 vm using VirtualBox...'
-	./test-vm.sh test-salvia Vagrantfile.vbox "${DEFAULT_CMD}"
+	./test-vm.sh test-salvia Vagrantfile.vbox "${ALT_CMD}"
 
 smolensk-1.7.libvirt:
 	@echo 'Creating Astra 1.7 vm using libvirt...'
