@@ -1,0 +1,57 @@
+{
+    "aronia": {
+        "description": "Alt Linux 10 (Aronia)",
+        "short_description": "Alt Linux 10",
+        "last_version": "Alt Linux 10.4"
+    },
+    "bookworm": {
+        "description": "Debian 12 (bookworm)",
+        "short_description": "Debian 12",
+        "last_version": "Debian 12.11.0"
+    },
+    "gosjava11": {
+        "description": "ГосJava 11 на Debian 12 (bookworm)",
+        "short_description": "ГосJava 11 на Debian 12",
+        "last_version": "ГосJava 11.0.26 на Debian 12.11.0"
+    },
+    "jammy": {
+        "description": "Ubuntu 22.04 LTS (Jammy Jellyfish)",
+        "short_description": "Ubuntu 22.04 LTS",
+        "last_version": "Ubuntu 22.04 LTS"
+    },
+    "mono": {
+        "description": "МОНО на Debian 12 (bookworm)",
+        "short_description": "МОНО на Debian 12",
+        "last_version": "МОНО 6.12.0 на Debian 12.11.0"
+    },
+    "noble": {
+        "description": "Ubuntu 24.04 LTS (Noble Numbat)",
+        "short_description": "Ubuntu 24.04 LTS",
+        "last_version": "Ubuntu 24.04 LTS"
+    },
+    "onyx": {
+        "description": "Основа 3 (Onyx)",
+        "short_description": "Основа 3",
+        "last_version": "Основа 3.0.1"
+    },
+    "openeuler2403": {
+        "description": "openEuler 24.03 LTS",
+        "short_description": "openEuler 24.03 LTS",
+        "last_version": "openEuler 24.03 LTS SP1"
+    },
+    "redos7": {
+        "description": "РЕД ОС 7.3",
+        "short_description": "РЕД ОС 7.3",
+        "last_version": "РЕД ОС 7.3.5"
+    },
+    "redos8": {
+        "description": "РЕД ОС 8",
+        "short_description": "РЕД ОС 8",
+        "last_version": "РЕД ОС 8.0"
+    },
+    "salvia": {
+        "description": "Alt Linux 11 (Salvia)",
+        "short_description": "Alt Linux 11",
+        "last_version": "Alt Linux 11.0"
+    }
+}
