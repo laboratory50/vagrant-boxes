@@ -22,3 +22,4 @@
 ("/net-eth" action "write" commit #t)
 ; Установка паролей
 ("/root/change_password" language ("ru_RU") passwd_1 "password" passwd_2 "password")
+("/users/create_account" new_name "vagrant" gecos "" allow_su #t auto #f passwd_1 "password" passwd_2 "password")

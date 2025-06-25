@@ -6,10 +6,6 @@ variables {
         "<wait25m>",
         # Авто-установка завершена. Сейчас будем разбираться с sudo и sshd. А можно ли по-человечески?
         "root<enter><wait>password<enter><wait>",
-        "apt-get update<enter><wait60s>",
-        "apt-get install -y sudo shadow-groups<enter><wait30s>",
-        "useradd --create-home --shell /bin/bash vagrant<enter><wait3s>",
-        "passwd vagrant<enter><wait>password<enter>password<enter><wait3s>",
         "echo -e 'Defaults:vagrant !requiretty\\n%vagrant ALL=(ALL) NOPASSWD: ALL\n' > /etc/sudoers.d/vagrant<enter><wait>",
         "chmod 440 /etc/sudoers.d/vagrant<enter><wait>",
         "gpasswd -a vagrant wheel<enter><wait>",
