@@ -1,5 +1,5 @@
 .vagrant
-docker/nppkt/installroot
+docker/nppct/installroot
 docker/rosa/installroot
 *.iso
 *.box

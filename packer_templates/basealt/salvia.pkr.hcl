@@ -1,11 +1,9 @@
 variables {
-    iso_url = "https://mirror.yandex.ru/altlinux-starterkits/x86_64/release/alt-p11-jeos-systemd-20250312-x86_64.iso"
-    iso_checksum = "md5:54ba1e02c9749026cd81291b72f51961"
-    # По состоянию на 26.08.2024 автоустановка Альт 11 работает только у дистрибутива
-    # alt-p11-jeos-systemd. Но там нет возможности нормально создать пользователя.
+    iso_url = "http://ftp.altlinux.org/pub/distributions/ALTLinux/p11/images/server/x86_64/alt-server-11.0-x86_64.iso"
+    iso_checksum = "md5:35af6c21fd3f73005647f676664de76a"
     boot_command = [
         "e<wait><down><down><down><down><end> ai curl=http://{{ .HTTPIP }}:{{ .HTTPPort }}/<f10>",
-        "<wait20m>",
+        "<wait25m>",
         # Авто-установка завершена. Сейчас будем разбираться с sudo и sshd. А можно ли по-человечески?
         "root<enter><wait>password<enter><wait>",
         "apt-get update<enter><wait60s>",
@@ -15,8 +13,10 @@ variables {
         "echo -e 'Defaults:vagrant !requiretty\\n%vagrant ALL=(ALL) NOPASSWD: ALL\n' > /etc/sudoers.d/vagrant<enter><wait>",
         "chmod 440 /etc/sudoers.d/vagrant<enter><wait>",
         "gpasswd -a vagrant wheel<enter><wait>",
-        "cp -r /etc/net/ifaces/ens3 /etc/net/ifaces/ens7<enter><wait>",
-        "apt-get install -y openssh-server<enter><wait30s>",
+        "echo 'SUBSYSTEM==\"net\", ACTION==\"add\", DRIVERS==\"?*\", ATTR{type}==\"1\", NAME=\"eth0\"' > /etc/udev/rules.d/70-persistent-net.rules<enter><wait>",
+        "echo -e 'BOOTPROTO=dhcp\\nTYPE=eth\\nCONFIG_WIRELESS=no' > /etc/net/ifaces/eth0/options<enter><wait>",
+        "rm -rf /etc/net/ifaces/enp0s3<enter><wait>",
+        "rm -rf /etc/net/ifaces/ens3<enter><wait>",
         "sed -i '/PasswordAuthentication yes/s/# //g' /etc/openssh/sshd_config<enter><wait>",
         "systemctl enable sshd && systemctl start sshd<enter>"
     ]
