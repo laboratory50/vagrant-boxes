@@ -12,6 +12,6 @@ then
     exit 1
 fi
 
-description=`jq -r ".${box}.last_version" ./descriptions.json`
+description=`jq -r ".[\"${box}\"][\"last_version\"]" ./descriptions.json`
 echo "Updating description for ${org}/${box} v${version}: ${description}."
 vagrant cloud version update --description "${description}" "${org}/${box}" "${version}"

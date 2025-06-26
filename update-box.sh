@@ -11,7 +11,7 @@ then
     exit 1
 fi
 
-description=`jq -r ".${box}.description" ./descriptions.json`
-short_description=`jq -r ".${box}.short_description" ./descriptions.json`
+description=`jq -r ".[\"${box}\"][\"description\"]" ./descriptions.json`
+short_description=`jq -r ".[\"${box}\"][\"short_description\"]" ./descriptions.json`
 echo "Updating description for ${org}/${box}: ${description}."
 vagrant cloud box update --description "${description}" --short-description "${short_description}" "${org}/${box}"

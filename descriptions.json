@@ -4,6 +4,11 @@
         "short_description": "Alt Linux 10",
         "last_version": "Alt Linux 10.4"
     },
+    "aronia-kde": {
+        "description": "Alt Linux 10 (Aronia) + KDE",
+        "short_description": "Alt Linux 10 + KDE",
+        "last_version": "Alt Linux 10.4 + KDE"
+    },
     "bookworm": {
         "description": "Debian 12 (bookworm)",
         "short_description": "Debian 12",
@@ -53,5 +58,10 @@
         "description": "Alt Linux 11 (Salvia)",
         "short_description": "Alt Linux 11",
         "last_version": "Alt Linux 11.0"
+    },
+    "salvia-kde": {
+        "description": "Alt Linux 11 (Salvia) + KDE",
+        "short_description": "Alt Linux 11 + KDE",
+        "last_version": "Alt Linux 11.0 + KDE"
     }
 }
