@@ -5,6 +5,7 @@ MONO_CMD := mono --version
 GOSJAVA_CMD := java -version
 
 .PHONY: aronia.libvirt aronia.vbox \
+	aronia-kde.libvirt \
 	bookworm.libvirt bookworm.vbox \
 	fresh.libvirt fresh.vbox \
 	gosjava11.libvirt gosjava11.vbox gosjava11.docker \
@@ -15,6 +16,7 @@ GOSJAVA_CMD := java -version
 	redos7.libvirt redos7.vbox \
 	redos8.libvirt redos8.vbox \
 	salvia.libvirt salvia.vbox \
+	salvia-kde.libvirt \
 	smolensk-1.7.libvirt \
 	smolensk-1.8.libvirt
 
@@ -25,6 +27,10 @@ aronia.libvirt:
 aronia.vbox:
 	@echo 'Creating Alt 10 vm using VirtualBox...'
 	./test-vm.sh test-aronia Vagrantfile.vbox "${ALT_CMD}"
+
+aronia-kde.libvirt:
+	@echo 'Creating Alt 10 vm using libvirt...'
+	./test-vm.sh test-aronia-kde Vagrantfile.libvirt "${ALT_CMD}"
 
 bookworm.libvirt:
 	@echo 'Creating Debian bookworm vm using libvirt...'
@@ -128,6 +134,10 @@ salvia.libvirt:
 salvia.vbox:
 	@echo 'Creating Alt 11 vm using VirtualBox...'
 	./test-vm.sh test-salvia Vagrantfile.vbox "${ALT_CMD}"
+
+salvia-kde.libvirt:
+	@echo 'Creating Alt 11 vm using libvirt...'
+	./test-vm.sh test-salvia-kde Vagrantfile.libvirt "${ALT_CMD}"
 
 smolensk-1.7.libvirt:
 	@echo 'Creating Astra 1.7 vm using libvirt...'

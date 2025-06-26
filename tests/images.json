@@ -4,6 +4,10 @@
         "local_libvirt_image": "packer_templates/basealt/qemu/aronia.box",
         "local_vbox_image": "packer_templates/basealt/virtualbox-iso/aronia.box"
     },
+    "test-aronia-kde": {
+        "image": "basealt/aronia-kde",
+        "local_libvirt_image": "packer_templates/basealt/qemu/aronia-kde.box"
+    },
     "test-bookworm": {
         "image": "lab50/bookworm",
         "local_libvirt_image": "packer_templates/debian/qemu/bookworm.box",
@@ -58,6 +62,10 @@
         "image": "basealt/salvia",
         "local_libvirt_image": "packer_templates/basealt/qemu/salvia.box",
         "local_vbox_image": "packer_templates/basealt/virtualbox-iso/salvia.box"
+    },
+    "test-salvia-kde": {
+        "image": "basealt/salvia-kde",
+        "local_libvirt_image": "packer_templates/basealt/qemu/salvia-kde.box"
     },
     "test-smolensk-1.7": {
         "image": "astralinux/smolensk-1.7",
