@@ -29,7 +29,7 @@ d-i passwd/user-uid string 1000
 d-i passwd/user-password password password
 d-i passwd/user-password-again password password
 d-i passwd/username string vagrant
-d-i pkgsel/include string sudo vim gpg python3
+d-i pkgsel/include string sudo vim gpg python3 ${pkg}
 d-i pkgsel/install-language-support boolean false
 d-i pkgsel/update-policy select none
 d-i pkgsel/upgrade select full-upgrade
@@ -38,7 +38,9 @@ d-i user-setup/allow-password-weak boolean true
 d-i user-setup/encrypt-home boolean false
 d-i preseed/late_command string sed -i '/^deb cdrom:/d' /target/etc/apt/sources.list; \
   echo -e 'Defaults:vagrant !requiretty\n%vagrant ALL=(ALL) NOPASSWD: ALL\n' > /target/etc/sudoers.d/vagrant; \
-  chmod 440 /target/etc/sudoers.d/vagrant
+  chmod 440 /target/etc/sudoers.d/vagrant; \
+  echo 'SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{type}=="1", NAME="eth0"' > /target/etc/udev/rules.d/70-persistent-net.rules; \
+  echo -e 'auto eth0\niface eth0 inet dhcp' > /target/etc/network/interfaces.d/eth0
 apt-cdrom-setup apt-setup/cdrom/set-first boolean false
 apt-mirror-setup apt-setup/use_mirror boolean true
 popularity-contest popularity-contest/participate boolean false

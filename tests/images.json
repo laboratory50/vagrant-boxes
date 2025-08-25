@@ -13,6 +13,14 @@
         "local_libvirt_image": "packer_templates/debian/qemu/bookworm.box",
         "local_vbox_image": "packer_templates/debian/virtualbox-iso/bookworm.box"
     },
+    "test-trixie": {
+        "image": "lab50/trixie",
+        "local_libvirt_image": "packer_templates/debian/qemu/trixie.box"
+    },
+    "test-trixie-kde": {
+        "image": "lab50/trixie-kde",
+        "local_libvirt_image": "packer_templates/debian/qemu/trixie-kde.box"
+    },
     "test-fresh": {
         "image": "rosa/2021.1-fresh",
         "local_libvirt_image": "packer_templates/rosa/qemu/fresh-server.box",

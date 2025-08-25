@@ -15,11 +15,11 @@ variables {
         "console-keymaps-at/keymap=us ",
         "<enter>"
     ]
-    iso_url = "https://cdimage.debian.org/cdimage/archive/12.11.0/amd64/iso-dvd/debian-12.11.0-amd64-DVD-1.iso"
-    iso_checksum = "sha256:be966aa53a436b3cfb96446d000e6c145a188e6df3dede4e2741161423aa4221"
+    iso_url = "https://cdimage.debian.org/cdimage/release/13.0.0/amd64/iso-dvd/debian-13.0.0-amd64-DVD-1.iso"
+    iso_checksum = "sha256:c998fe73ca8dbce235f189a2a92873bf0a8f70b0982f361629a18a0f38b6fe92"
 }
 
-source "qemu" "bookworm" {
+source "qemu" "trixie" {
     iso_url = var.iso_url
     iso_checksum = var.iso_checksum
     disk_size = "30000M"
@@ -27,7 +27,7 @@ source "qemu" "bookworm" {
     format = "qcow2"
     accelerator = "kvm"
     http_content = {
-        "/preseed.cfg" = templatefile("${path.root}/bookworm.pkrtpl", {tasks="ssh-server", pkg="", boot="/dev/vda"})
+        "/preseed.cfg" = templatefile("${path.root}/trixie.pkrtpl", {tasks="ssh-server", pkg="", boot="/dev/vda"})
     }
     ssh_username = "vagrant"
     ssh_password = "password"
@@ -40,7 +40,7 @@ source "qemu" "bookworm" {
     shutdown_command = "echo 'password' | sudo -S /sbin/shutdown -hP now"
 }
 
-source "virtualbox-iso" "bookworm" {
+source "virtualbox-iso" "trixie" {
     iso_url = var.iso_url
     iso_checksum = var.iso_checksum
     disk_size = 30000
@@ -56,7 +56,7 @@ source "virtualbox-iso" "bookworm" {
     vboxmanage = [["modifyvm", "{{.Name}}", "--audio", "none", "--nat-localhostreachable1", "on"]]
     virtualbox_version_file = ".vbox_version"
     http_content = {
-        "/preseed.cfg" = templatefile("${path.root}/bookworm.pkrtpl", {tasks="ssh-server", pkg="", boot="/dev/sda"})
+        "/preseed.cfg" = templatefile("${path.root}/trixie.pkrtpl", {tasks="ssh-server", pkg="", boot="/dev/sda"})
     }
     ssh_username = "vagrant"
     ssh_password = "password"
@@ -67,7 +67,7 @@ source "virtualbox-iso" "bookworm" {
     shutdown_command = "echo 'password' | sudo -S /sbin/shutdown -hP now"
 }
 
-source "qemu" "bookworm-kde" {
+source "qemu" "trixie-kde" {
     iso_url = var.iso_url
     iso_checksum = var.iso_checksum
     disk_size = "30000M"
@@ -75,11 +75,11 @@ source "qemu" "bookworm-kde" {
     format = "qcow2"
     accelerator = "kvm"
     http_content = {
-        "/preseed.cfg" = templatefile("${path.root}/bookworm.pkrtpl", {tasks="ssh-server", pkg="kde-plasma-desktop", boot="/dev/vda"})
+        "/preseed.cfg" = templatefile("${path.root}/trixie.pkrtpl", {tasks="ssh-server", pkg="kde-plasma-desktop", boot="/dev/vda"})
     }
     ssh_username = "vagrant"
     ssh_password = "password"
-    ssh_timeout = "60m"
+    ssh_timeout = "70m"
     vm_name = "${source.name}"
     net_device = "virtio-net"
     disk_interface = "virtio"
@@ -89,7 +89,7 @@ source "qemu" "bookworm-kde" {
 }
 
 build {
-    sources = ["source.qemu.bookworm", "source.virtualbox-iso.bookworm", "source.qemu.bookworm-kde"]
+    sources = ["source.qemu.trixie", "source.virtualbox-iso.trixie", "source.qemu.trixie-kde"]
     provisioner "shell" {
         scripts = [
             "${path.root}/scripts/networking.sh",

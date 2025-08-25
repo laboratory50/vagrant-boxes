@@ -13,6 +13,8 @@ ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 	debian \
 	bookworm.libvirt bookworm.vbox \
 	bookworm-kde.libvirt \
+	trixie.libvirt trixie.vbox \
+	trixie-kde.libvirt \
 	fedora fedora38 fedora38-kde fedora39 fedora39-kde fedora40 fedora40-kde \
 	lab50 \
 	gosjava11.libvirt gosjava11.vbox gosjava11.docker \
@@ -122,6 +124,18 @@ bookworm.vbox:
 bookworm-kde.libvirt:
 	rm -f packer_templates/debian/qemu/bookworm-kde.box
 	cd packer_templates/debian; packer build -only qemu.bookworm-kde bookworm.pkr.hcl
+
+trixie.libvirt:
+	rm -f packer_templates/debian/qemu/trixie.box
+	cd packer_templates/debian; packer build -only qemu.trixie trixie.pkr.hcl
+
+trixie.vbox:
+	rm -f packer_templates/debian/virtualbox-iso/trixie.box
+	cd packer_templates/debian; packer build -only virtualbox-iso.trixie trixie.pkr.hcl
+
+trixie-kde.libvirt:
+	rm -f packer_templates/debian/qemu/trixie-kde.box
+	cd packer_templates/debian; packer build -only qemu.trixie-kde trixie.pkr.hcl
 
 fedora: fedora38 fedora38-kde fedora39 fedora39-kde fedora40 fedora40-kde
 

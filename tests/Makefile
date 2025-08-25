@@ -7,6 +7,8 @@ GOSJAVA_CMD := java -version
 .PHONY: aronia.libvirt aronia.vbox \
 	aronia-kde.libvirt \
 	bookworm.libvirt bookworm.vbox \
+	trixie.libvirt \
+	trixie-kde.libvirt \
 	fresh.libvirt fresh.vbox \
 	gosjava11.libvirt gosjava11.vbox gosjava11.docker \
 	jammy.libvirt jammy.vbox \
@@ -39,6 +41,14 @@ bookworm.libvirt:
 bookworm.vbox:
 	@echo 'Creating Debian bookworm vm using VirtualBox...'
 	./test-vm.sh test-bookworm Vagrantfile.vbox "${DEFAULT_CMD}"
+
+trixie.libvirt:
+	@echo 'Creating Debian trixie vm using libvirt...'
+	./test-vm.sh test-trixie Vagrantfile.libvirt "${DEFAULT_CMD}"
+
+trixie-kde.libvirt:
+	@echo 'Creating Debian trixie vm using libvirt...'
+	./test-vm.sh test-trixie-kde Vagrantfile.libvirt "${DEFAULT_CMD}"
 
 fresh.libvirt:
 	@echo 'Creating ROSA Fresh vm using libvirt...'
