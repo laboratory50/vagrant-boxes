@@ -15,8 +15,8 @@ variables {
         "console-keymaps-at/keymap=us ",
         "<enter>"
     ]
-    iso_url = "https://cdimage.debian.org/cdimage/release/12.11.0/amd64/iso-dvd/debian-12.11.0-amd64-DVD-1.iso"
-    iso_checksum = "sha256:be966aa53a436b3cfb96446d000e6c145a188e6df3dede4e2741161423aa4221"
+    iso_url = "https://cdimage.debian.org/cdimage/release/13.0.0/amd64/iso-dvd/debian-13.0.0-amd64-DVD-1.iso"
+    iso_checksum = "sha256:c998fe73ca8dbce235f189a2a92873bf0a8f70b0982f361629a18a0f38b6fe92"
 }
 
 source "qemu" "mono" {
@@ -27,7 +27,7 @@ source "qemu" "mono" {
     format = "qcow2"
     accelerator = "kvm"
     http_content = {
-        "/preseed.cfg" = templatefile("${path.root}/bookworm.pkrtpl", {tasks = "ssh-server", boot = "/dev/vda"})
+        "/preseed.cfg" = templatefile("${path.root}/../debian/trixie.pkrtpl", {tasks="ssh-server", pkg="", boot="/dev/vda"})
     }
     ssh_username = "vagrant"
     ssh_password = "password"
@@ -56,7 +56,7 @@ source "virtualbox-iso" "mono" {
     vboxmanage = [["modifyvm", "{{.Name}}", "--audio", "none", "--nat-localhostreachable1", "on"]]
     virtualbox_version_file = ".vbox_version"
     http_content = {
-        "/preseed.cfg" = templatefile("${path.root}/bookworm.pkrtpl", {tasks = "ssh-server", boot = "/dev/sda"})
+        "/preseed.cfg" = templatefile("${path.root}/../debian/trixie.pkrtpl", {tasks="ssh-server", pkg="", boot="/dev/sda"})
     }
     ssh_username = "vagrant"
     ssh_password = "password"
