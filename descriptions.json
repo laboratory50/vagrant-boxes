@@ -63,5 +63,10 @@
         "description": "Alt Linux 11 (Salvia) + KDE",
         "short_description": "Alt Linux 11 + KDE",
         "last_version": "Alt Linux 11.0 + KDE"
+    },
+    "trixie": {
+        "description": "Debian 13 (trixie)",
+        "short_description": "Debian 13",
+        "last_version": "Debian 13.0.0"
     }
 }
