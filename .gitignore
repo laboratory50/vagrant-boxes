@@ -1,6 +1,7 @@
 .vagrant
 docker/nppct/installroot
 docker/rosa/installroot
+docker/msvsphere/installroot
 *.iso
 *.box
 *.log

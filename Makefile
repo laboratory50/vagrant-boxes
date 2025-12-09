@@ -37,7 +37,8 @@ ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 	noble.libvirt noble.vbox \
 	noble-kde.libvirt \
 	openeuler2403 \
-	openeuler2403.libvirt openeuler2403.vbox
+	openeuler2403.libvirt openeuler2403.vbox \
+	msvsphere9.docker msvsphere10.docker
 
 all: astralinux basealt debian fedora lab50 nppkt redsoft rosa ubuntu
 
@@ -306,3 +307,45 @@ openeuler2403.libvirt:
 openeuler2403.vbox:
 	rm -f packer_templates/openeuler/virtualbox-iso/openeuler2403.box
 	cd packer_templates/openeuler; packer build -only virtualbox-iso.openeuler2403 openeuler2403.pkr.hcl
+
+msvsphere9.docker:
+ifneq ($(shell id -u), 0)
+	@echo 'You are not root.'
+	exit 1
+endif
+	$(eval MSVSPHERE_DIR = "${ROOT_DIR}/docker/msvsphere")
+	$(eval INSTALLROOT = "${MSVSPHERE_DIR}/installroot")
+	$(eval PACKAGES = sphere-release-common systemd util-linux rootfiles)
+	@echo "Building in ${INSTALLROOT}..."
+	rm -rf "${INSTALLROOT}"
+	dnf install -y --nogpgcheck --releasever 9 --config "${MSVSPHERE_DIR}/msvsphere-baseos.repo" --installroot "${INSTALLROOT}" ${PACKAGES}
+	@echo "Creating a docker image..."
+	$(eval REVISION = $(shell git rev-parse HEAD))
+	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
+	docker build -f "${MSVSPHERE_DIR}/Dockerfile"
+		-t inferit/msvsphere9 \
+		--build-arg "created=${CREATED}" \
+		--build-arg version=9.7 \
+		--build-arg "revision=${REVISION}" \
+		"${INSTALLROOT}"
+
+msvsphere10.docker:
+ifneq ($(shell id -u), 0)
+	@echo 'You are not root.'
+	exit 1
+endif
+	$(eval MSVSPHERE_DIR = "${ROOT_DIR}/docker/msvsphere")
+	$(eval INSTALLROOT = "${MSVSPHERE_DIR}/installroot")
+	$(eval PACKAGES = sphere-release-common systemd util-linux rootfiles)
+	@echo "Building in ${INSTALLROOT}..."
+	rm -rf "${INSTALLROOT}"
+	dnf install -y --nogpgcheck --releasever 10 --config "${MSVSPHERE_DIR}/msvsphere-baseos.repo" --installroot "${INSTALLROOT}" ${PACKAGES}
+	@echo "Creating a docker image..."
+	$(eval REVISION = $(shell git rev-parse HEAD))
+	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
+	docker build -f "${MSVSPHERE_DIR}/Dockerfile" \
+		-t inferit/msvsphere10 \
+		--build-arg "created=${CREATED}" \
+		--build-arg version=10.0 \
+		--build-arg "revision=${REVISION}" \
+		"${INSTALLROOT}"

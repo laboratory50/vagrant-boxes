@@ -1,3 +1,4 @@
+PRINT_RELEASE_INFO_CMD := cat /etc/os-release
 DEFAULT_CMD := sudo ip a; cat /etc/os-release
 ALT_CMD := sudo ip a; cat /etc/altlinux-release
 ASTRA_CMD := sudo ip a; cat /etc/astra_version
@@ -20,7 +21,8 @@ GOSJAVA_CMD := java -version
 	salvia.libvirt salvia.vbox \
 	salvia-kde.libvirt \
 	smolensk-1.7.libvirt \
-	smolensk-1.8.libvirt
+	smolensk-1.8.libvirt \
+	msvsphere9.docker msvsphere10.docker
 
 aronia.libvirt:
 	@echo 'Creating Alt 10 vm using libvirt...'
@@ -110,7 +112,7 @@ onyx.vbox:
 
 onyx.docker:
 	@echo 'Creating OSnova container...'
-	docker container run --name test-onyx nppct/onyx:latest ${DEFAULT_CMD}
+	docker container run --name test-onyx nppct/onyx:latest ${PRINT_RELEASE_INFO_CMD}
 	docker rm test-onyx
 
 openeuler2403.libvirt:
@@ -156,3 +158,13 @@ smolensk-1.7.libvirt:
 smolensk-1.8.libvirt:
 	@echo 'Creating Astra 1.8 vm using libvirt...'
 	./test-vm.sh test-smolensk-1.8 Vagrantfile.libvirt "${ASTRA_CMD}"
+
+msvsphere9.docker:
+	@echo 'Creating MSVSphere 9 container from inferit/msvsphere9...'
+	docker container run --name test-msvsphere9 inferit/msvsphere9:latest ${PRINT_RELEASE_INFO_CMD}
+	docker rm test-msvsphere9
+
+msvsphere10.docker:
+	@echo 'Creating MSVSphere 10 container from inferit/msvsphere10...'
+	docker container run --name test-msvsphere10 inferit/msvsphere10:latest ${PRINT_RELEASE_INFO_CMD}
+	docker rm test-msvsphere10
