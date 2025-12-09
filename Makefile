@@ -309,20 +309,20 @@ openeuler2403.vbox:
 	cd packer_templates/openeuler; packer build -only virtualbox-iso.openeuler2403 openeuler2403.pkr.hcl
 
 msvsphere9.docker:
-ifneq ($(shell id -u), 0)
-	@echo 'You are not root.'
-	exit 1
-endif
 	$(eval MSVSPHERE_DIR = "${ROOT_DIR}/docker/msvsphere")
 	$(eval INSTALLROOT = "${MSVSPHERE_DIR}/installroot")
-	$(eval PACKAGES = sphere-release-common systemd util-linux rootfiles)
-	@echo "Building in ${INSTALLROOT}..."
+	$(eval ARCHIVE_PATH = /tmp/msvsphere9.tar.xz)
+	rm -f "${ARCHIVE_PATH}"
+	@echo "Downloading to ${ARCHIVE_PATH}..."
+	curl --output "${ARCHIVE_PATH}" https://repo1.msvsphere-os.ru/msvsphere/9.7/images/x86_64/docker/msvsphere-9-systemd.tar.xz
+	@echo "Extracting the archive to ${INSTALLROOT}..."
 	rm -rf "${INSTALLROOT}"
-	dnf install -y --nogpgcheck --releasever 9 --config "${MSVSPHERE_DIR}/msvsphere-baseos.repo" --installroot "${INSTALLROOT}" ${PACKAGES}
-	@echo "Creating a docker image..."
+	mkdir -p "${INSTALLROOT}"
+	tar -xJf "${ARCHIVE_PATH}" -C "${INSTALLROOT}"
+	@echo "Creating a docker image from ${INSTALLROOT}..."
 	$(eval REVISION = $(shell git rev-parse HEAD))
 	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
-	docker build -f "${MSVSPHERE_DIR}/Dockerfile"
+	docker build -f "${MSVSPHERE_DIR}/Dockerfile" \
 		-t inferit/msvsphere9 \
 		--build-arg "created=${CREATED}" \
 		--build-arg version=9.7 \
@@ -330,17 +330,17 @@ endif
 		"${INSTALLROOT}"
 
 msvsphere10.docker:
-ifneq ($(shell id -u), 0)
-	@echo 'You are not root.'
-	exit 1
-endif
 	$(eval MSVSPHERE_DIR = "${ROOT_DIR}/docker/msvsphere")
 	$(eval INSTALLROOT = "${MSVSPHERE_DIR}/installroot")
-	$(eval PACKAGES = sphere-release-common systemd util-linux rootfiles)
-	@echo "Building in ${INSTALLROOT}..."
+	$(eval ARCHIVE_PATH = /tmp/msvsphere10.tar.xz)
+	rm -f "${ARCHIVE_PATH}"
+	@echo "Downloading to ${ARCHIVE_PATH}..."
+	curl --output "${ARCHIVE_PATH}" https://repo1.msvsphere-os.ru/msvsphere/10/images/x86_64/docker/msvsphere-10-systemd.tar.xz
+	@echo "Extracting the archive to ${INSTALLROOT}..."
 	rm -rf "${INSTALLROOT}"
-	dnf install -y --nogpgcheck --releasever 10 --config "${MSVSPHERE_DIR}/msvsphere-baseos.repo" --installroot "${INSTALLROOT}" ${PACKAGES}
-	@echo "Creating a docker image..."
+	mkdir -p "${INSTALLROOT}"
+	tar -xJf "${ARCHIVE_PATH}" -C "${INSTALLROOT}"
+	@echo "Creating a docker image from ${INSTALLROOT}..."
 	$(eval REVISION = $(shell git rev-parse HEAD))
 	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
 	docker build -f "${MSVSPHERE_DIR}/Dockerfile" \
