@@ -10,7 +10,8 @@ GOSJAVA_CMD := java -version
 	bookworm.libvirt bookworm.vbox \
 	trixie.libvirt \
 	trixie-kde.libvirt \
-	fresh.libvirt fresh.vbox \
+	rosa2021.1.libvirt rosa2021.1.vbox rosa2021.1.docker \
+	rosa13.libvirt rosa13.vbox rosa13.docker \
 	gosjava11.libvirt gosjava11.vbox gosjava11.docker \
 	jammy.libvirt jammy.vbox \
 	mono.libvirt mono.vbox mono.docker \
@@ -52,13 +53,31 @@ trixie-kde.libvirt:
 	@echo 'Creating Debian trixie vm using libvirt...'
 	./test-vm.sh test-trixie-kde Vagrantfile.libvirt "${DEFAULT_CMD}"
 
-fresh.libvirt:
-	@echo 'Creating ROSA Fresh vm using libvirt...'
-	./test-vm.sh test-fresh Vagrantfile.vbox "${DEFAULT_CMD}"
+rosa2021.1.libvirt:
+	@echo 'Creating ROSA Fresh 12 VM using libvirt...'
+	./test-vm.sh test-rosa2021.1 Vagrantfile.libvirt "${DEFAULT_CMD}"
 
-fresh.vbox:
-	@echo 'Creating ROSA Fresh vm using VirtualBox...'
-	./test-vm.sh test-fresh Vagrantfile.vbox "${DEFAULT_CMD}"
+rosa2021.1.vbox:
+	@echo 'Creating ROSA Fresh 12 VM using VirtualBox...'
+	./test-vm.sh test-rosa2021.1 Vagrantfile.vbox "${DEFAULT_CMD}"
+
+rosa2021.1.docker:
+	@echo 'Creating a container from rosa/2021.1-fresh...'
+	docker container run --name test-rosa2021.1 rosa/2021.1-fresh:latest ${PRINT_RELEASE_INFO_CMD}
+	docker rm test-rosa2021.1
+
+rosa13.libvirt:
+	@echo 'Creating ROSA Fresh 13 VM using libvirt...'
+	./test-vm.sh test-rosa13 Vagrantfile.libvirt "${DEFAULT_CMD}"
+
+rosa13.vbox:
+	@echo 'Creating ROSA Fresh 13 VM using VirtualBox...'
+	./test-vm.sh test-rosa13 Vagrantfile.vox "${DEFAULT_CMD}"
+
+rosa13.docker:
+	@echo 'Creating a container from rosa/rosa13-fresh...'
+	docker container run --name test-rosa13 rosa/rosa13-fresh:latest ${PRINT_RELEASE_INFO_CMD}
+	docker rm test-rosa13
 
 gosjava11.libvirt:
 	@echo 'Creating ГосJava 11 vm using libvirt...'

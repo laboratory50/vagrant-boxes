@@ -28,9 +28,10 @@ ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 	redos8.libvirt redos8.vbox \
 	redos8-kde.libvirt \
 	rosa \
-	fresh.libvirt fresh.vbox \
-	fresh.docker \
-	fresh-kde.libvirt \
+	rosa2021.1.libvirt rosa2021.1.vbox \
+	rosa2021.1.docker \
+	rosa13.libvirt rosa13.vbox \
+	rosa13.docker \
 	chrome-kde cobalt \
 	ubuntu \
 	jammy.libvirt jammy.vbox \
@@ -247,17 +248,17 @@ redos8-kde.libvirt:
 	rm -f packer_templates/redsoft/qemu/redos8-kde.box
 	cd packer_templates/redsoft; packer build -only qemu.redos8-kde redos8.pkr.hcl
 
-rosa: fresh.libvirt fresh.vbox fresh-kde.libvirt
+rosa: rosa2021.1.libvirt rosa2021.1.vbox rosa13.libvirt
 
-fresh.libvirt:
-	rm -f packer_templates/rosa/qemu/fresh-server.box
-	cd packer_templates/rosa; packer build -only qemu.fresh-server rosa.pkr.hcl
+rosa2021.1.libvirt:
+	rm -f packer_templates/rosa/qemu/rosa2021_1.box
+	cd packer_templates/rosa; packer build -only qemu.rosa2021_1 rosa.pkr.hcl
 
-fresh.vbox:
-	rm -f packer_templates/rosa/virtualbox-iso/fresh-server.box
-	cd packer_templates/rosa; packer build -only virtualbox-iso.fresh-server rosa.pkr.hcl
+rosa2021.1.vbox:
+	rm -f packer_templates/rosa/virtualbox-iso/rosa2021_1.box
+	cd packer_templates/rosa; packer build -only virtualbox-iso.rosa2021_1 rosa.pkr.hcl
 
-fresh.docker:
+rosa2021.1.docker:
 ifneq ($(shell id -u), 0)
 	@echo 'You are not root.'
 	exit 1
@@ -268,13 +269,44 @@ endif
 	@echo "Building in ${INSTALLROOT}..."
 	rm -rf "${INSTALLROOT}"
 	dnf install -y --nogpgcheck --releasever 2021.1 --config "${ROSA_DIR}/rosa-main-x86_64.repo" --installroot "${INSTALLROOT}" ${PACKAGES}
-	@echo "Creating a docker image..."
+	@echo "Creating a docker image from ${INSTALLROOT}..."
+	$(eval REVISION = $(shell git rev-parse HEAD))
 	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
-	docker build -f "${ROSA_DIR}/Dockerfile" -t rosa/2021.1-fresh --build-arg "created=${CREATED}" "${INSTALLROOT}"
+	docker build -f "${ROSA_DIR}/Dockerfile" \
+		-t rosa/2021.1-fresh \
+		--build-arg "created=${CREATED}" \
+		--build-arg version=12.5.1 \
+		--build-arg "revision=${REVISION}" \
+		"${INSTALLROOT}"
 
-fresh-kde.libvirt:
-	rm -f packer_templates/rosa/qemu/fresh-kde.box
-	cd packer_templates/rosa; packer build -only qemu.fresh-kde rosa.pkr.hcl
+rosa13.libvirt:
+	rm -f packer_templates/rosa/qemu/rosa13.box
+	cd packer_templates/rosa; packer build -only qemu.rosa13 rosa.pkr.hcl
+
+rosa13.vbox:
+	rm -f packer_templates/rosa/virtualbox-iso/rosa13.box
+	cd packer_templates/rosa; packer build -only virtualbox-iso.rosa13 rosa.pkr.hcl
+
+rosa13.docker:
+ifneq ($(shell id -u), 0)
+	@echo 'You are not root.'
+	exit 1
+endif
+	$(eval ROSA_DIR = "${ROOT_DIR}/docker/rosa")
+	$(eval INSTALLROOT = "${ROSA_DIR}/installroot")
+	$(eval PACKAGES = branding-configs-fresh-server systemd util-linux rootfiles)
+	@echo "Building in ${INSTALLROOT}..."
+	rm -rf "${INSTALLROOT}"
+	dnf install -y --nogpgcheck --releasever 13 --config "${ROSA_DIR}/rosa-main-x86_64.repo" --installroot "${INSTALLROOT}" ${PACKAGES}
+	@echo "Creating a docker image from ${INSTALLROOT}..."
+	$(eval REVISION = $(shell git rev-parse HEAD))
+	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
+	docker build -f "${ROSA_DIR}/Dockerfile" \
+		-t rosa/rosa13-fresh \
+		--build-arg "created=${CREATED}" \
+		--build-arg version=13.1 \
+		--build-arg "revision=${REVISION}" \
+		"${INSTALLROOT}"
 
 ubuntu: jammy.libvirt jammy.vbox noble.libvirt noble.vbox noble-kde.libvirt
 

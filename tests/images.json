@@ -21,10 +21,15 @@
         "image": "lab50/trixie-kde",
         "local_libvirt_image": "packer_templates/debian/qemu/trixie-kde.box"
     },
-    "test-fresh": {
+    "test-rosa2021.1": {
         "image": "rosa/2021.1-fresh",
-        "local_libvirt_image": "packer_templates/rosa/qemu/fresh-server.box",
-        "local_vbox_image": "packer_templates/rosa/virtualbox-iso/fresh-server.box"
+        "local_libvirt_image": "packer_templates/rosa/qemu/rosa2021_1.box",
+        "local_vbox_image": "packer_templates/rosa/virtualbox-iso/rosa2021_1.box"
+    },
+    "test-rosa13": {
+        "image": "rosa/rosa13-fresh",
+        "local_libvirt_image": "packer_templates/rosa/qemu/rosa13.box",
+        "local_vbox_image": "packer_templates/rosa/virtualbox-iso/rosa13.box"
     },
     "test-gosjava11": {
         "image": "lab50/gosjava11",
