@@ -13,6 +13,8 @@ variables {
         "<wait2s><enter><wait3s>e<wait>",
         "<down><down><end> systemd.unit=anaconda.target inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/rosa13.cfg<F10>"
     ]
+    rosa13_kde_iso_url = "https://mirror.rosa.ru/rosa/rosa13/iso/ROSA.FRESH.13/plasma6/ROSA.FRESH.PLASMA6.13.1.x86_64.iso"
+    rosa13_kde_iso_checksum = "md5:ad80ff2479a276c3bf334ff0d554427e"
     shutdown_command = "sudo shutdown -P now"
 }
 
@@ -126,13 +128,33 @@ source "virtualbox-iso" "rosa13" {
     shutdown_command = var.shutdown_command
 }
 
+source "qemu" "rosa13-kde" {
+    iso_url = var.rosa13_kde_iso_url
+    iso_checksum = var.rosa13_kde_iso_checksum
+    disk_size = "30000M"
+    memory = 5120
+    format = "qcow2"
+    accelerator = "kvm"
+    http_directory = "http"
+    ssh_username = "vagrant"
+    ssh_password = "password"
+    ssh_timeout = "20m"
+    vm_name = "${source.name}"
+    net_device = "virtio-net"
+    disk_interface = "virtio"
+    boot_wait = "3s"
+    boot_command = var.rosa13_boot_command
+    shutdown_command = var.shutdown_command
+}
+
 build {
     sources = [
         "source.qemu.rosa2021_1",
         "source.virtualbox-iso.rosa2021_1",
         "source.qemu.fresh-kde",
         "source.qemu.rosa13",
-        "source.virtualbox-iso.rosa13"
+        "source.virtualbox-iso.rosa13",
+        "source.qemu.rosa13-kde"
     ]
     provisioner "shell" {
         expect_disconnect = true

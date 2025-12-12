@@ -31,6 +31,10 @@
         "local_libvirt_image": "packer_templates/rosa/qemu/rosa13.box",
         "local_vbox_image": "packer_templates/rosa/virtualbox-iso/rosa13.box"
     },
+    "test-rosa13-kde": {
+        "image": "rosa/rosa13-fresh-kde",
+        "local_libvirt_image": "packer_templates/rosa/qemu/rosa13-kde.box"
+    },
     "test-gosjava11": {
         "image": "lab50/gosjava11",
         "local_libvirt_image": "packer_templates/lab50/qemu/gosjava11.box",

@@ -74,6 +74,10 @@ rosa13.vbox:
 	@echo 'Creating ROSA Fresh 13 VM using VirtualBox...'
 	./test-vm.sh test-rosa13 Vagrantfile.vox "${DEFAULT_CMD}"
 
+rosa13-kde.libvirt:
+	@echo 'Creating ROSA Fresh 13 VM using libvirt...'
+	./test-vm.sh test-rosa13-kde Vagrantfile.libvirt "${DEFAULT_CMD}"
+
 rosa13.docker:
 	@echo 'Creating a container from rosa/rosa13-fresh...'
 	docker container run --name test-rosa13 rosa/rosa13-fresh:latest ${PRINT_RELEASE_INFO_CMD}
