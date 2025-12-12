@@ -25,8 +25,10 @@
 | РЕД ОС 7.3 + MATE                     | `redos7-mate.libvirt`                         |
 | РЕД ОС 8                              | `redos8.libvirt`, `redos8.vbox`               |
 | РЕД ОС 8 + KDE                        | `redos8-kde.libvirt`                          |
-| РОСА «ФРЕШ» 12.5                      | `fresh.libvirt`, `fresh.vbox`                 |
-| РОСА «ФРЕШ» 12.5 + KDE                | `fresh-kde.libvirt`                           |
+| РОСА Фреш 12.5.1                      | `rosa2021.1.libvirt`, `rosa2021.1.vbox`       |
+| РОСА Фреш 12.5.1 + KDE                | `rosa2021.1-kde.libvirt`                      |
+| РОСА Фреш 13.1                        | `rosa13.libvirt`, `rosa13.vbox`               |
+| РОСА Фреш 13.1 + KDE                  | `rosa13-kde.libvirt`                          |
 | Ubuntu 22.04 LTS (Jammy Jellyfish)    | `jammy.libvirt`, `jammy.vbox`                 |
 | Ubuntu 24.04 LTS (Noble Numbat)       | `noble.libvirt`, `noble.vbox`                 |
 | Ubuntu 24.04 LTS (Noble Numbat) + KDE | `noble-kde.libvirt`                           |

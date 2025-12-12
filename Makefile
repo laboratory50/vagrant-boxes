@@ -28,10 +28,10 @@ ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 	redos8.libvirt redos8.vbox \
 	redos8-kde.libvirt \
 	rosa \
-	rosa2021.1.libvirt rosa2021.1.vbox \
+	rosa2021.1.libvirt rosa2021.1.vbox rosa2021.1-kde.libvirt \
 	rosa2021.1.docker \
 	rosa13.libvirt rosa13.vbox rosa13-kde.libvirt \
-	rosa13.docker \ \
+	rosa13.docker \
 	chrome-kde cobalt \
 	ubuntu \
 	jammy.libvirt jammy.vbox \
@@ -248,7 +248,7 @@ redos8-kde.libvirt:
 	rm -f packer_templates/redsoft/qemu/redos8-kde.box
 	cd packer_templates/redsoft; packer build -only qemu.redos8-kde redos8.pkr.hcl
 
-rosa: rosa2021.1.libvirt rosa2021.1.vbox rosa13.libvirt
+rosa: rosa2021.1.libvirt rosa2021.1.vbox rosa13.libvirt rosa13.vbox
 
 rosa2021.1.libvirt:
 	rm -f packer_templates/rosa/qemu/rosa2021_1.box
@@ -257,6 +257,10 @@ rosa2021.1.libvirt:
 rosa2021.1.vbox:
 	rm -f packer_templates/rosa/virtualbox-iso/rosa2021_1.box
 	cd packer_templates/rosa; packer build -only virtualbox-iso.rosa2021_1 rosa.pkr.hcl
+
+rosa2021.1-kde.libvirt:
+	rm -f packer_templates/rosa/qemu/rosa2021_1-kde.box
+	cd packer_templates/rosa; packer build -only qemu.rosa2021_1-kde rosa.pkr.hcl
 
 rosa2021.1.docker:
 ifneq ($(shell id -u), 0)

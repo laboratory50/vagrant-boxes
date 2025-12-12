@@ -10,8 +10,10 @@ GOSJAVA_CMD := java -version
 	bookworm.libvirt bookworm.vbox \
 	trixie.libvirt \
 	trixie-kde.libvirt \
-	rosa2021.1.libvirt rosa2021.1.vbox rosa2021.1.docker \
-	rosa13.libvirt rosa13.vbox rosa13.docker \
+	rosa2021.1.libvirt rosa2021.1.vbox rosa2021.1-kde.libvirt \
+	rosa2021.1.docker \
+	rosa13.libvirt rosa13.vbox rosa13-kde.libvirt \
+	rosa13.docker \
 	gosjava11.libvirt gosjava11.vbox gosjava11.docker \
 	jammy.libvirt jammy.vbox \
 	mono.libvirt mono.vbox mono.docker \
@@ -60,6 +62,10 @@ rosa2021.1.libvirt:
 rosa2021.1.vbox:
 	@echo 'Creating ROSA Fresh 12 VM using VirtualBox...'
 	./test-vm.sh test-rosa2021.1 Vagrantfile.vbox "${DEFAULT_CMD}"
+
+rosa2021.1-kde.libvirt:
+	@echo 'Creating ROSA Fresh 12 VM using libvirt...'
+	./test-vm.sh test-rosa2021.1-kde Vagrantfile.libvirt "${DEFAULT_CMD}"
 
 rosa2021.1.docker:
 	@echo 'Creating a container from rosa/2021.1-fresh...'

@@ -54,6 +54,11 @@
         "short_description": "РЕД ОС 8",
         "last_version": "РЕД ОС 8.0"
     },
+    "rosa13-fresh": {
+        "description": "РОСА Фреш (платформа rosa13)",
+        "short_description": "РОСА Фреш",
+        "last_version": "РОСА Фреш 13.1"
+    },
     "salvia": {
         "description": "Alt Linux 11 (Salvia)",
         "short_description": "Alt Linux 11",
