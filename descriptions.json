@@ -54,9 +54,19 @@
         "short_description": "РЕД ОС 8",
         "last_version": "РЕД ОС 8.0"
     },
+    "2021.1-fresh": {
+        "description": "РОСА Фреш 12 (платформа 2021.1)",
+        "short_description": "РОСА Фреш 12",
+        "last_version": "РОСА Фреш 12.5.1"
+    },
+    "2021.1-fresh-kde": {
+        "description": "РОСА Фреш 12 + KDE (платформа 2021.1)",
+        "short_description": "РОСА Фреш 12 + KDE",
+        "last_version": "РОСА Фреш 12.5.1 + KDE"
+    },
     "rosa13-fresh": {
-        "description": "РОСА Фреш (платформа rosa13)",
-        "short_description": "РОСА Фреш",
+        "description": "РОСА Фреш 13 (платформа rosa13)",
+        "short_description": "РОСА Фреш 13",
         "last_version": "РОСА Фреш 13.1"
     },
     "salvia": {

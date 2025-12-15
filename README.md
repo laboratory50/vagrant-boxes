@@ -34,6 +34,7 @@
 | Ubuntu 24.04 LTS (Noble Numbat) + KDE | `noble-kde.libvirt`                           |
 | openEuler 24.03 LTS                   | `openeuler2403.libvirt`, `openeuler2403.vbox` |
 
+
 # Настройка окружения для сборки образов
 
 Тестировалось на Debian 12, Packer 1.11.2, QEMU 7.2.13, VirtualBox 7.0.20.
