@@ -177,8 +177,13 @@ gosjava11.vbox:
 
 gosjava11.docker:
 	$(eval LAB50_DIR = "${ROOT_DIR}/docker/lab50")
+	$(eval REVISION = $(shell git rev-parse HEAD))
 	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
-	docker build -f "${LAB50_DIR}/Dockerfile.gosjava11" -t lab50/gosjava11 --build-arg "created=${CREATED}" "${LAB50_DIR}"
+	docker build -f "${LAB50_DIR}/Dockerfile.gosjava11" \
+		-t lab50/gosjava11 \
+		--build-arg "created=${CREATED}" \
+		--build-arg "revision=${REVISION}" \
+		"${LAB50_DIR}"
 
 mono.libvirt:
 	rm -f packer_templates/lab50/qemu/mono.box
@@ -190,8 +195,13 @@ mono.vbox:
 
 mono.docker:
 	$(eval LAB50_DIR = "${ROOT_DIR}/docker/lab50")
+	$(eval REVISION = $(shell git rev-parse HEAD))
 	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
-	docker build -f "${LAB50_DIR}/Dockerfile.mono" -t lab50/mono --build-arg "created=${CREATED}" "${LAB50_DIR}"
+	docker build -f "${LAB50_DIR}/Dockerfile.mono" \
+		-t lab50/mono \
+		--build-arg "created=${CREATED}" \
+		--build-arg "revision=${REVISION}" \
+		"${LAB50_DIR}"
 
 nppct: onyx.libvirt onyx.vbox
 
@@ -218,9 +228,14 @@ endif
 	rm -rf "${INSTALLROOT}"
 	mmdebstrap --mode=unshare --keyring="${NPPCT_DIR}/osnova.asc" --include=apt,ca-certificates --aptopt='APT::Install-Recommends false' --aptopt='APT::AutoRemove::SuggestsImportant false' --aptopt='APT::AutoRemove::RecommendsImportant false' --merged-usr --components=main,contrib,non-free onyx3 "${INSTALLROOT}" "https://${OSNOVA_CREDENTIALS}@dl.nppct.ru/onyx3/stable/repos/disk1"
 	echo '' > "${INSTALLROOT}/etc/apt/sources.list"
-	@echo "Creating a docker image..."
+	@echo "Creating a docker image from ${INSTALLROOT}..."
+	$(eval REVISION = $(shell git rev-parse HEAD))
 	$(eval CREATED = $(shell date -u +"%Y-%m-%dT%H:%M:%SZ"))
-	docker build -f "${NPPCT_DIR}/Dockerfile" -t nppct/onyx --build-arg "created=${CREATED}" "${INSTALLROOT}"
+	docker build -f "${NPPCT_DIR}/Dockerfile" \
+		-t nppct/onyx \
+		--build-arg "created=${CREATED}" \
+		--build-arg "revision=${REVISION}" \
+		"${INSTALLROOT}"
 
 redsoft: redos7.libvirt redos7.vbox redos7-mate.libvirt redos8.libvirt redos8.vbox redos8-kde.libvirt
 

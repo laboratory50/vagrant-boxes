@@ -9,8 +9,13 @@ RUN chmod 0644 /etc/apt/trusted.gpg.d/lab50.gpg \
 CMD ["/bin/bash"]
 
 ARG created=unknown
+ARG revision=unknown
 LABEL org.opencontainers.image.vendor="Лаборатория 50"
 LABEL org.opencontainers.image.authors="Лаборатория 50"
 LABEL org.opencontainers.image.title="ГосJava 11"
 LABEL org.opencontainers.image.version="2025.1"
 LABEL org.opencontainers.image.created=$created
+LABEL org.opencontainers.image.url="https://rudev.io/prods/госjava/"
+LABEL org.opencontainers.image.documentation="https://github.com/laboratory50/vagrant-boxes/blob/main/README.md"
+LABEL org.opencontainers.image.source="https://github.com/laboratory50/vagrant-boxes"
+LABEL org.opencontainers.image.revision=$revision
