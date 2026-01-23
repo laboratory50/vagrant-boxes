@@ -1,6 +1,6 @@
 variables {
-    iso_url = "https://files.red-soft.ru/redos/7.3/x86_64/iso/redos-MUROM-7.3.5-20241106.3-Everything-x86_64-DVD1.iso"
-    iso_checksum = "md5:b38821b30cdd3ba57f8748d4653acc62"
+    iso_url = "https://files.red-soft.ru/redos/7.3/x86_64/iso/redos-MUROM-7.3.6-20250715.0-Everything-x86_64-DVD1.iso"
+    iso_checksum = "md5:5099d3a29aa8f7ff6a676eee65cc0e4c"
 }
 
 source "qemu" "redos7" {

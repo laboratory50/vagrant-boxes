@@ -8,7 +8,7 @@ GOSJAVA_CMD := java -version
 .PHONY: aronia.libvirt aronia.vbox \
 	aronia-kde.libvirt \
 	bookworm.libvirt bookworm.vbox \
-	trixie.libvirt \
+	trixie.libvirt trixie.vbox \
 	trixie-kde.libvirt \
 	rosa2021.1.libvirt rosa2021.1.vbox rosa2021.1-kde.libvirt \
 	rosa2021.1.docker \
@@ -50,6 +50,10 @@ bookworm.vbox:
 trixie.libvirt:
 	@echo 'Creating Debian trixie vm using libvirt...'
 	./test-vm.sh test-trixie Vagrantfile.libvirt "${DEFAULT_CMD}"
+
+trixie.vbox:
+	@echo 'Creating Debian trixie vm using VirtualBox...'
+	./test-vm.sh test-trixie Vagrantfile.vbox "${DEFAULT_CMD}"
 
 trixie-kde.libvirt:
 	@echo 'Creating Debian trixie vm using libvirt...'

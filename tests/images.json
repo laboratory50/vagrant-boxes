@@ -15,7 +15,8 @@
     },
     "test-trixie": {
         "image": "lab50/trixie",
-        "local_libvirt_image": "packer_templates/debian/qemu/trixie.box"
+        "local_libvirt_image": "packer_templates/debian/qemu/trixie.box",
+        "local_vbox_image": "packer_templates/debian/virtualbox-iso/trixie.box"
     },
     "test-trixie-kde": {
         "image": "lab50/trixie-kde",

@@ -47,12 +47,12 @@
     "redos7": {
         "description": "РЕД ОС 7.3",
         "short_description": "РЕД ОС 7.3",
-        "last_version": "РЕД ОС 7.3.5"
+        "last_version": "РЕД ОС 7.3.6"
     },
     "redos8": {
         "description": "РЕД ОС 8",
         "short_description": "РЕД ОС 8",
-        "last_version": "РЕД ОС 8.0"
+        "last_version": "РЕД ОС 8.0.2"
     },
     "2021.1-fresh": {
         "description": "РОСА Фреш 12 (платформа 2021.1)",
@@ -82,6 +82,6 @@
     "trixie": {
         "description": "Debian 13 (trixie)",
         "short_description": "Debian 13",
-        "last_version": "Debian 13.0.0"
+        "last_version": "Debian 13.3.0"
     }
 }

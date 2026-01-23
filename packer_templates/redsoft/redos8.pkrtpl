@@ -1,4 +1,5 @@
 lang ru_RU.UTF-8
+eula --agreed
 keyboard --xlayouts='us'
 network --bootproto=dhcp --noipv6 --onboot=on --device=eth0
 xconfig --defaultdesktop=KDE --startxonboot

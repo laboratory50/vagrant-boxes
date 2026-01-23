@@ -1,6 +1,7 @@
 variables {
-    iso_url = "https://files.red-soft.ru/redos/8.0/x86_64/iso/redos-8-20241206.4-Everything-x86_64-DVD1.iso"
-    iso_checksum = "md5:26f31cf86d31f609b4754e1d24f00043"
+    # 8.0.2.
+    iso_url = "https://files.red-soft.ru/redos/8.0/x86_64/iso/redos-8-20250711.4-Everything-x86_64-DVD1.iso"
+    iso_checksum = "md5:2d2cb2e2741f47d354cda52bbf5d91eb"
     boot_command = [
         "<up><wait>e<wait><down><down><end> inst.text inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<f10>"
     ]

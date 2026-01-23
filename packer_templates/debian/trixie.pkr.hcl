@@ -15,8 +15,8 @@ variables {
         "console-keymaps-at/keymap=us ",
         "<enter>"
     ]
-    iso_url = "https://cdimage.debian.org/cdimage/release/13.0.0/amd64/iso-dvd/debian-13.0.0-amd64-DVD-1.iso"
-    iso_checksum = "sha256:c998fe73ca8dbce235f189a2a92873bf0a8f70b0982f361629a18a0f38b6fe92"
+    iso_url = "https://cdimage.debian.org/cdimage/release/13.3.0/amd64/iso-dvd/debian-13.3.0-amd64-DVD-1.iso"
+    iso_checksum = "sha256:7b7837fa2ed64fd45224bff905643bd3ab32157dcc0ab1dc68aad5b9dc2d4d39"
 }
 
 source "qemu" "trixie" {
