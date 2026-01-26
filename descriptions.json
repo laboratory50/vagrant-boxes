@@ -1,87 +1,136 @@
 {
-    "aronia": {
+    "basealt/aronia": {
         "description": "Alt Linux 10 (Aronia)",
         "short_description": "Alt Linux 10",
-        "last_version": "Alt Linux 10.4"
+        "last_version": "Alt Linux 10.4",
+        "local_libvirt_image": "packer_templates/basealt/qemu/aronia.box",
+        "local_virtualbox_image": "packer_templates/basealt/virtualbox-iso/aronia.box"
     },
-    "aronia-kde": {
+    "basealt/aronia-kde": {
         "description": "Alt Linux 10 (Aronia) + KDE",
         "short_description": "Alt Linux 10 + KDE",
-        "last_version": "Alt Linux 10.4 + KDE"
+        "last_version": "Alt Linux 10.4 + KDE",
+        "local_libvirt_image": "packer_templates/basealt/qemu/aronia-kde.box"
     },
-    "bookworm": {
-        "description": "Debian 12 (bookworm)",
-        "short_description": "Debian 12",
-        "last_version": "Debian 12.11.0"
-    },
-    "gosjava11": {
-        "description": "ГосJava 11 на Debian 12 (bookworm)",
-        "short_description": "ГосJava 11 на Debian 12",
-        "last_version": "ГосJava 11.0.26 на Debian 12.11.0"
-    },
-    "jammy": {
-        "description": "Ubuntu 22.04 LTS (Jammy Jellyfish)",
-        "short_description": "Ubuntu 22.04 LTS",
-        "last_version": "Ubuntu 22.04 LTS"
-    },
-    "mono": {
-        "description": "МОНО на Debian 12 (bookworm)",
-        "short_description": "МОНО на Debian 12",
-        "last_version": "МОНО 6.12.0 на Debian 12.11.0"
-    },
-    "noble": {
-        "description": "Ubuntu 24.04 LTS (Noble Numbat)",
-        "short_description": "Ubuntu 24.04 LTS",
-        "last_version": "Ubuntu 24.04 LTS"
-    },
-    "onyx": {
-        "description": "Основа 3 (Onyx)",
-        "short_description": "Основа 3",
-        "last_version": "Основа 3.0.1"
-    },
-    "openeuler2403": {
-        "description": "openEuler 24.03 LTS",
-        "short_description": "openEuler 24.03 LTS",
-        "last_version": "openEuler 24.03 LTS SP1"
-    },
-    "redos7": {
-        "description": "РЕД ОС 7.3",
-        "short_description": "РЕД ОС 7.3",
-        "last_version": "РЕД ОС 7.3.6"
-    },
-    "redos8": {
-        "description": "РЕД ОС 8",
-        "short_description": "РЕД ОС 8",
-        "last_version": "РЕД ОС 8.0.2"
-    },
-    "2021.1-fresh": {
-        "description": "РОСА Фреш 12 (платформа 2021.1)",
-        "short_description": "РОСА Фреш 12",
-        "last_version": "РОСА Фреш 12.5.1"
-    },
-    "2021.1-fresh-kde": {
-        "description": "РОСА Фреш 12 + KDE (платформа 2021.1)",
-        "short_description": "РОСА Фреш 12 + KDE",
-        "last_version": "РОСА Фреш 12.5.1 + KDE"
-    },
-    "rosa13-fresh": {
-        "description": "РОСА Фреш 13 (платформа rosa13)",
-        "short_description": "РОСА Фреш 13",
-        "last_version": "РОСА Фреш 13.1"
-    },
-    "salvia": {
+    "basealt/salvia": {
         "description": "Alt Linux 11 (Salvia)",
         "short_description": "Alt Linux 11",
-        "last_version": "Alt Linux 11.0"
+        "last_version": "Alt Linux 11.0",
+        "local_libvirt_image": "packer_templates/basealt/qemu/salvia.box",
+        "local_virtualbox_image": "packer_templates/basealt/virtualbox-iso/salvia.box"
     },
-    "salvia-kde": {
+    "basealt/salvia-kde": {
         "description": "Alt Linux 11 (Salvia) + KDE",
         "short_description": "Alt Linux 11 + KDE",
-        "last_version": "Alt Linux 11.0 + KDE"
+        "last_version": "Alt Linux 11.0 + KDE",
+        "local_libvirt_image": "packer_templates/basealt/qemu/salvia-kde.box"
     },
-    "trixie": {
+    "lab50/bookworm": {
+        "description": "Debian 12 (bookworm)",
+        "short_description": "Debian 12",
+        "last_version": "Debian 12.11.0",
+        "local_libvirt_image": "packer_templates/debian/qemu/bookworm.box",
+        "local_virtualbox_image": "packer_templates/debian/virtualbox-iso/bookworm.box"
+    },
+    "lab50/gosjava11": {
+        "description": "ГосJava 11 на Debian 12 (bookworm)",
+        "short_description": "ГосJava 11 на Debian 12",
+        "last_version": "ГосJava 11.0.26 на Debian 12.11.0",
+        "local_libvirt_image": "packer_templates/lab50/qemu/gosjava11.box",
+        "local_virtualbox_image": "packer_templates/lab50/virtualbox-iso/gosjava11.box"
+    },
+    "lab50/jammy": {
+        "description": "Ubuntu 22.04 LTS (Jammy Jellyfish)",
+        "short_description": "Ubuntu 22.04 LTS",
+        "last_version": "Ubuntu 22.04 LTS",
+        "local_libvirt_image": "packer_templates/ubuntu/qemu/jammy.box",
+        "local_virtualbox_image": "packer_templates/ubuntu/virtualbox-iso/jammy.box"
+    },
+    "lab50/mono": {
+        "description": "МОНО на Debian 12 (bookworm)",
+        "short_description": "МОНО на Debian 12",
+        "last_version": "МОНО 6.12.0 на Debian 12.11.0",
+        "local_libvirt_image": "packer_templates/lab50/qemu/mono.box",
+        "local_virtualbox_image": "packer_templates/lab50/virtualbox-iso/mono.box"
+    },
+    "lab50/noble": {
+        "description": "Ubuntu 24.04 LTS (Noble Numbat)",
+        "short_description": "Ubuntu 24.04 LTS",
+        "last_version": "Ubuntu 24.04 LTS",
+        "local_libvirt_image": "packer_templates/ubuntu/qemu/noble.box",
+        "local_virtualbox_image": "packer_templates/ubuntu/virtualbox-iso/noble.box"
+    },
+    "lab50/trixie": {
         "description": "Debian 13 (trixie)",
         "short_description": "Debian 13",
-        "last_version": "Debian 13.3.0"
+        "last_version": "Debian 13.3.0",
+        "local_libvirt_image": "packer_templates/debian/qemu/trixie.box",
+        "local_virtualbox_image": "packer_templates/debian/virtualbox-iso/trixie.box"
+    },
+    "lab50/trixie-kde": {
+        "description": "Debian 13 (trixie) + KDE",
+        "short_description": "Debian 13 + KDE",
+        "last_version": "Debian 13.3.0 + KDE",
+        "local_libvirt_image": "packer_templates/debian/qemu/trixie-kde.box"
+    },
+    "nppkt/onyx": {
+        "description": "Основа 3 (Onyx)",
+        "short_description": "Основа 3",
+        "last_version": "Основа 3.0.1",
+        "local_libvirt_image": "packer_templates/nppct/qemu/onyx.box",
+        "local_virtualbox_image": "packer_templates/nppct/virtualbox-iso/onyx.box"
+    },
+    "openeuler/openeuler2403": {
+        "description": "openEuler 24.03 LTS",
+        "short_description": "openEuler 24.03 LTS",
+        "last_version": "openEuler 24.03 LTS SP1",
+        "local_libvirt_image": "packer_templates/openeuler/qemu/openeuler2403.box",
+        "local_virtualbox_image": "packer_templates/openeuler/virtualbox-iso/openeuler2403.box"
+    },
+    "redsoft/redos7": {
+        "description": "РЕД ОС 7.3",
+        "short_description": "РЕД ОС 7.3",
+        "last_version": "РЕД ОС 7.3.6",
+        "local_libvirt_image": "packer_templates/redsoft/qemu/redos7.box",
+        "local_virtualbox_image": "packer_templates/redsoft/virtualbox-iso/redos7.box"
+    },
+    "redsoft/redos7-mate": {
+        "description": "РЕД ОС 7.3 + MATE",
+        "short_description": "РЕД ОС 7.3 + MATE",
+        "last_version": "РЕД ОС 7.3.6 + MATE",
+        "local_libvirt_image": "packer_templates/redsoft/qemu/redos7-mate.box"
+    },
+    "redsoft/redos8": {
+        "description": "РЕД ОС 8",
+        "short_description": "РЕД ОС 8",
+        "last_version": "РЕД ОС 8.0.2",
+        "local_libvirt_image": "packer_templates/redsoft/qemu/redos8.box",
+        "local_virtualbox_image": "packer_templates/redsoft/virtualbox-iso/redos8.box"
+    },
+    "redsoft/redos8-kde": {
+        "description": "РЕД ОС 8 + KDE",
+        "short_description": "РЕД ОС 8 + KDE",
+        "last_version": "РЕД ОС 8.0.2 + KDE",
+        "local_libvirt_image": "packer_templates/redsoft/qemu/redos8-kde.box"
+    },
+    "rosa/2021.1-fresh": {
+        "description": "РОСА Фреш 12 (платформа 2021.1)",
+        "short_description": "РОСА Фреш 12",
+        "last_version": "РОСА Фреш 12.5.1",
+        "local_libvirt_image": "packer_templates/rosa/qemu/rosa2021_1.box",
+        "local_virtualbox_image": "packer_templates/rosa/virtualbox-iso/rosa2021_1.box"
+    },
+    "rosa/2021.1-fresh-kde": {
+        "description": "РОСА Фреш 12 + KDE (платформа 2021.1)",
+        "short_description": "РОСА Фреш 12 + KDE",
+        "last_version": "РОСА Фреш 12.5.1 + KDE",
+        "local_libvirt_image": "packer_templates/rosa/qemu/rosa2021_1-fresh-kde.box"
+    },
+    "rosa/rosa13-fresh": {
+        "description": "РОСА Фреш 13 (платформа rosa13)",
+        "short_description": "РОСА Фреш 13",
+        "last_version": "РОСА Фреш 13.1",
+        "local_libvirt_image": "packer_templates/rosa/qemu/rosa13.box",
+        "local_virtualbox_image": "packer_templates/rosa/virtualbox-iso/rosa13.box"
     }
 }

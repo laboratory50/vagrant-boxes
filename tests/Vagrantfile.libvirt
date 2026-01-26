@@ -4,13 +4,6 @@ $cpus = 2
 $memory = 2048
 $pool = "default"
 
-def register_vm(config, hostname, box)
-    config.vm.define hostname, default: true do |vm|
-        vm.vm.hostname = hostname
-        vm.vm.box = box
-    end
-end
-
 Vagrant.configure("2") do |config|
     config.vm.synced_folder ".", "/vagrant", disabled: true
     config.vm.provider :libvirt do |libvirt|
@@ -29,7 +22,10 @@ Vagrant.configure("2") do |config|
     file = File.open "images.json"
     images = JSON.load file
     file.close
-    images.each do |hostname, image_info|
-        register_vm(config, hostname, image_info['image'])
+    images.each do |hostname, image_name|
+        config.vm.define hostname, default: true do |vm|
+            vm.vm.hostname = hostname
+            vm.vm.box = image_name
+        end
     end
 end

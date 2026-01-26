@@ -20,7 +20,9 @@ GOSJAVA_CMD := java -version
 	noble.libvirt noble.vbox \
 	onyx.libvirt onyx.vbox onyx.docker \
 	redos7.libvirt redos7.vbox \
+	redos7-mate.libvirt \
 	redos8.libvirt redos8.vbox \
+	redos8-kde.libvirt \
 	salvia.libvirt salvia.vbox \
 	salvia-kde.libvirt \
 	smolensk-1.7.libvirt \
@@ -164,6 +166,10 @@ redos7.vbox:
 	@echo 'Creating РЕД ОС 7 vm using VirtualBox...'
 	./test-vm.sh test-redos7 Vagrantfile.vbox "${DEFAULT_CMD}"
 
+redos7-mate.libvirt:
+	@echo 'Creating РЕД ОС 7 vm using libvirt...'
+	./test-vm.sh test-redos7-mate Vagrantfile.libvirt "${DEFAULT_CMD}"
+
 redos8.libvirt:
 	@echo 'Creating РЕД ОС 8 vm using libvirt...'
 	./test-vm.sh test-redos8 Vagrantfile.libvirt "${DEFAULT_CMD}"
@@ -171,6 +177,10 @@ redos8.libvirt:
 redos8.vbox:
 	@echo 'Creating РЕД ОС 8 vm using VirtualBox...'
 	./test-vm.sh test-redos8 Vagrantfile.vbox "${DEFAULT_CMD}"
+
+redos8-kde.libvirt:
+	@echo 'Creating РЕД ОС 8 vm using libvirt...'
+	./test-vm.sh test-redos8-kde Vagrantfile.libvirt "${DEFAULT_CMD}"
 
 salvia.libvirt:
 	@echo 'Creating Alt 11 vm using libvirt...'

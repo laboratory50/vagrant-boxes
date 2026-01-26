@@ -1,4 +1,5 @@
 #!/bin/bash
+# Updates a version on a Vagrant server.
 
 set -e
 
@@ -12,6 +13,11 @@ then
     exit 1
 fi
 
-description=`jq -r ".[\"${box}\"][\"last_version\"]" ./descriptions.json`
+description=`jq -r ".\"${org}/${box}\".last_version" descriptions.json`
+if [ "${description}" == 'null' ]
+then
+    echo "Unknown image ${org}/${box}."
+    exit 1
+fi
 echo "Updating description for ${org}/${box} v${version}: ${description}."
 vagrant cloud version update --description "${description}" "${org}/${box}" "${version}"
