@@ -28,7 +28,7 @@
     "lab50/bookworm": {
         "description": "Debian 12 (bookworm)",
         "short_description": "Debian 12",
-        "last_version": "Debian 12.11.0",
+        "last_version": "Debian 12.13.0",
         "local_libvirt_image": "packer_templates/debian/qemu/bookworm.box",
         "local_virtualbox_image": "packer_templates/debian/virtualbox-iso/bookworm.box"
     },

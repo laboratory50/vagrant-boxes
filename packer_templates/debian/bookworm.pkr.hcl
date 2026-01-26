@@ -15,8 +15,8 @@ variables {
         "console-keymaps-at/keymap=us ",
         "<enter>"
     ]
-    iso_url = "https://cdimage.debian.org/cdimage/archive/12.11.0/amd64/iso-dvd/debian-12.11.0-amd64-DVD-1.iso"
-    iso_checksum = "sha256:be966aa53a436b3cfb96446d000e6c145a188e6df3dede4e2741161423aa4221"
+    iso_url = "https://cdimage.debian.org/cdimage/archive/12.13.0/amd64/iso-dvd/debian-12.13.0-amd64-DVD-1.iso"
+    iso_checksum = "sha256:3e2c2092d79deca0aba80f9ffc6ff96b9b9b303d858f91e1bc2790fd83856fdb"
 }
 
 source "qemu" "bookworm" {
