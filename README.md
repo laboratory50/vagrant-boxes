@@ -146,7 +146,33 @@ $ make mono.libvirt
 $ make mono.vbox
 ```
 
-Цели тестового `Makefile` совпадают с целяими главного `Makefile`.
+Цели тестового `Makefile` совпадают с целями главного `Makefile`.
+
+# Выпуск новой версии бокса
+
+На примере `lab50/bookworm`:
+1. Собрать нужные боксы:
+   ```
+   $ make bookworm.libvirt
+   $ make bookworm.vbox
+   ```
+1. Задать переменную окружения `VAGRANT_SERVER_URL`.
+1. Авторизоваться:
+   ```
+   $ vagrant cloud auth login
+   ```
+1. Выпустить новую версию:
+   ```
+   $ ./create-version.sh lab50 bookworm 20260126.1
+   ```
+   Или вручную:
+   ```
+   $ vagrant cloud version create lab50/bookworm 20260126.1
+   $ vagrant cloud publish lab50/bookworm 20260126.1 libvirt packer_templates/debian/qemu/bookworm.box
+   $ vagrant cloud publish lab50/bookworm 20260126.1 virtualbox packer_templates/debian/virtualbox-iso/bookworm.box
+   $ vagrant cloud version release lab50/bookworm 20260126.1
+   $ vagrant cloud version update --description 'Debian 12.13.0' lab50/bookworm 20260126.1
+   ```
 
 # Похожие проекты
 
