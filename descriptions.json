@@ -32,6 +32,12 @@
         "local_libvirt_image": "packer_templates/debian/qemu/bookworm.box",
         "local_virtualbox_image": "packer_templates/debian/virtualbox-iso/bookworm.box"
     },
+    "lab50/bookworm-kde": {
+        "description": "Debian 12 (bookworm) + KDE",
+        "short_description": "Debian 12 + KDE",
+        "last_version": "Debian 12.13.0 + KDE",
+        "local_libvirt_image": "packer_templates/debian/qemu/bookworm-kde.box"
+    },
     "lab50/gosjava11": {
         "description": "ГосJava 11 на Debian 12 (bookworm)",
         "short_description": "ГосJava 11 на Debian 12",

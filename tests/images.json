@@ -2,6 +2,7 @@
     "test-aronia": "basealt/aronia",
     "test-aronia-kde": "basealt/aronia-kde",
     "test-bookworm": "lab50/bookworm",
+    "test-bookworm-kde": "lab50/bookworm-kde",
     "test-trixie": "lab50/trixie",
     "test-trixie-kde": "lab50/trixie-kde",
     "test-rosa2021.1": "rosa/2021.1-fresh",
