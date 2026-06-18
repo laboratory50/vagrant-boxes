@@ -1,7 +1,12 @@
 variables {
     smolensk_1_7_iso_url = "smolensk-1.7.0-11.06.2021_12.40.iso"
     smolensk_1_7_iso_checksum = "md5:659a34caf83ae0bfe9e123e3bb831278"
-    smolensk_1_7_repos = "deb https://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.5/repository-base 1.7_x86-64 main contrib non-free"
+    smolensk_1_7_repos = <<-EOF
+    deb https://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.6/uu/2/repository-main 1.7_x86-64 main contrib non-free
+    deb https://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.6/uu/2/repository-update 1.7_x86-64 main contrib non-free
+    deb https://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.6/xr/1/repository-extended 1.7_x86-64 main contrib non-free
+    deb https://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.6/xr/2/repository-extended 1.7_x86-64 main contrib non-free
+    EOF
     # TODO: Можно как-то обойтись без переключения на вирт. консоль и ручных манипуляций с сетью?
     boot_command = [
         "<esc><wait><esc><wait><enter>",
@@ -66,7 +71,7 @@ build {
     provisioner "shell" {
         inline = [
             "echo '${var.smolensk_1_7_repos}' | sudo tee /etc/apt/sources.list",
-            "sudo apt-get update && sudo apt-get -y -o Dpkg::Options::='--force-confnew' full-upgrade"
+            "sudo apt update && sudo apt -y install astra-update && sudo astra-update -A -r"
         ]
     }
     provisioner "shell" {
